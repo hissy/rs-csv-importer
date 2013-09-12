@@ -1,0 +1,4 @@
+"post_name","post_author","post_date","post_type","post_status","post_title","post_content","post_category","post_tags","custom_field","_is_imported"
+"Import-test","admin",2013/9/13 0:00,,"publish","CSV Import Test","This is a post for csv import.
+Hello dolly.","fruits","apple,banana","this is custom field value.",1
+,"editor",,"post",,"editor post",,"undefined",,,
