@@ -21,6 +21,7 @@ Alternative CSV Importer plugin. Simple and powerful.
 Contains CSV file sample in plugin_dir/rs-csv-importer/sample .
 
 Available values:
+
 * post_name: (string) post slug
 * post_author: (login or ID) author
 * post_date: (string) publish date
