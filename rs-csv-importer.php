@@ -71,7 +71,6 @@ class RS_CSV_Importer extends WP_Importer {
 	
 	// Step 1
 	function greet() {
-		$this->header();
 		echo '<p>'.__( 'Choose a CSV (.csv) file to upload, then click Upload file and import.', 'rs-csv-importer' ).'</p>';
 		echo '<ol>';
 		echo '<li>'.__( 'Select UTF-8 as charset.', 'rs-csv-importer' ).'</li>';
@@ -79,27 +78,28 @@ class RS_CSV_Importer extends WP_Importer {
 		echo '<li>'.__( 'You must quote all text cells.', 'rs-csv-importer' ).'</li>';
 		echo '</ol>';
 		wp_import_upload_form( add_query_arg('step', 1) );
-		$this->footer();
 	}
 
 	// Step 2
 	function import() {
-		$this->header();
-		
 		$file = wp_import_handle_upload();
 
 		if ( isset( $file['error'] ) ) {
-			echo '<p>' . esc_html( $file['error'] ) . '</p>';
+			echo '<p><strong>' . __( 'Sorry, there has been an error.', 'rs-csv-importer' ) . '</strong><br />';
+			echo esc_html( $file['error'] ) . '</p>';
+			return false;
+		} else if ( ! file_exists( $file['file'] ) ) {
+			echo '<p><strong>' . __( 'Sorry, there has been an error.', 'rs-csv-importer' ) . '</strong><br />';
+			printf( __( 'The export file could not be found at <code>%s</code>. It is likely that this was caused by a permissions problem.', 'rs-csv-importer' ), esc_html( $file['file'] ) );
+			echo '</p>';
 			return false;
 		}
-
+		
 		$this->id = (int) $file['id'];
 		$this->file = get_attached_file($this->id);
 		$result = $this->process_posts();
 		if ( is_wp_error( $result ) )
 			return $result;
-		
-		$this->footer();
 	}
 	
 	/** Parsing header row, setup the columns definition.
@@ -136,8 +136,11 @@ class RS_CSV_Importer extends WP_Importer {
 		global $wpdb;
 
 		$handle = $this->fopen($this->file, 'r');
-		if ( $handle == null )
+		if ( $handle == false ) {
+			echo '<p><strong>'.__( 'Failed to open file.', 'rs-csv-importer' ).'</strong></p>';
+			wp_import_cleanup($this->id);
 			return false;
+		}
 		
 		$is_first = true;
 		
@@ -151,13 +154,17 @@ class RS_CSV_Importer extends WP_Importer {
 				$post = array();
 				
 				// (string) post slug
-				if (isset($data[$this->columns['post_name']]) && !empty($data[$this->columns['post_name']])) {
+				if (isset($this->columns['post_name']) &&
+					isset($data[$this->columns['post_name']]) &&
+					! empty($data[$this->columns['post_name']])) {
 					$post['post_name'] = $data[$this->columns['post_name']];
 					unset($data[$this->columns['post_name']]);
 				}
 				
 				// (login or ID) post_author
-				if (isset($data[$this->columns['post_author']]) && !empty($data[$this->columns['post_author']])) {
+				if (isset($this->columns['post_author']) &&
+					isset($data[$this->columns['post_author']]) &&
+					! empty($data[$this->columns['post_author']])) {
 					$post_author = $data[$this->columns['post_author']];
 					if (is_int($post_author)) {
 						$post['post_author'] = $post_author;
@@ -172,7 +179,9 @@ class RS_CSV_Importer extends WP_Importer {
 				}
 				
 				// (string) publish date
-				if (isset($data[$this->columns['post_date']]) && !empty($data[$this->columns['post_date']])) {
+				if (isset($this->columns['post_date']) &&
+					isset($data[$this->columns['post_date']]) &&
+					! empty($data[$this->columns['post_date']])) {
 					$post_date = $data[$this->columns['post_date']];
 					$post_date = date("Y-m-d H:i:s", strtotime($post_date));
 					$post['post_date'] = $post_date;
@@ -181,32 +190,42 @@ class RS_CSV_Importer extends WP_Importer {
 				}
 				
 				// (string) post type
-				if (isset($data[$this->columns['post_type']]) && !empty($data[$this->columns['post_type']])) {
+				if (isset($this->columns['post_type']) &&
+					isset($data[$this->columns['post_type']]) &&
+					! empty($data[$this->columns['post_type']])) {
 					$post['post_type'] = $data[$this->columns['post_type']];
 					unset($data[$this->columns['post_type']]);
 				}
 				
 				// (string) post status
-				if (isset($data[$this->columns['post_status']]) && !empty($data[$this->columns['post_status']])) {
+				if (isset($this->columns['post_status']) &&
+					isset($data[$this->columns['post_status']]) &&
+					! empty($data[$this->columns['post_status']])) {
 					$post['post_status'] = $data[$this->columns['post_status']];
 					unset($data[$this->columns['post_status']]);
 				}
 				
 				// (string) post title
 				$post['post_title'] = '';
-				if (isset($data[$this->columns['post_title']]) && !empty($data[$this->columns['post_title']])) {
+				if (isset($this->columns['post_title']) &&
+					isset($data[$this->columns['post_title']]) &&
+					! empty($data[$this->columns['post_title']])) {
 					$post['post_title'] = $data[$this->columns['post_title']];
 					unset($data[$this->columns['post_title']]);
 				}
 				
 				// (string) post content
-				if (isset($data[$this->columns['post_content']]) && !empty($data[$this->columns['post_content']])) {
+				if (isset($this->columns['post_content']) &&
+					isset($data[$this->columns['post_content']]) &&
+					! empty($data[$this->columns['post_content']])) {
 					$post['post_content'] = $data[$this->columns['post_content']];
 					unset($data[$this->columns['post_content']]);
 				}
 				
 				// (string, comma divided) slug of post categories
-				if (isset($data[$this->columns['post_category']]) && !empty($data[$this->columns['post_category']])) {
+				if (isset($this->columns['post_category']) &&
+					isset($data[$this->columns['post_category']]) &&
+					! empty($data[$this->columns['post_category']])) {
 					$categories = preg_split("/[\s,]+/", $data[$this->columns['post_category']]);
 					if ($categories) {
 						$post['post_category'] = wp_create_categories($categories);
@@ -216,7 +235,9 @@ class RS_CSV_Importer extends WP_Importer {
 				}
 				
 				// (string, comma divided) name of post tags
-				if (isset($data[$this->columns['post_tags']]) && !empty($data[$this->columns['post_tags']])) {
+				if (isset($this->columns['post_tags']) &&
+					isset($data[$this->columns['post_tags']]) &&
+					! empty($data[$this->columns['post_tags']])) {
 					$tags = preg_split("/[\s,]+/", $data[$this->columns['post_tags']]);
 					if ($tags) {
 						$post['post_tags'] = $tags;
@@ -226,7 +247,7 @@ class RS_CSV_Importer extends WP_Importer {
 				
 				$meta = array();
 				foreach ($data as $key => $value) {
-					if (!empty($value)) {
+					if (!empty($value) && isset($this->column_raw[$key])) {
 						$meta[$this->column_raw[$key]] = $value;
 					}
 				}
@@ -248,6 +269,8 @@ class RS_CSV_Importer extends WP_Importer {
 
 	// dispatcher
 	function dispatch() {
+		$this->header();
+		
 		if (empty ($_GET['step']))
 			$step = 0;
 		else
@@ -265,6 +288,8 @@ class RS_CSV_Importer extends WP_Importer {
 					echo $result->get_error_message();
 				break;
 		}
+		
+		$this->footer();
 	}
 	
 }
