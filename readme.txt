@@ -36,8 +36,10 @@ Add star and read future issues about rs-csv-importer on [GitHub](https://github
 
 == Installation ==
 
-1. Upload All files to the `/wp-content/plugins/` directory
-2. Activate the plugin through the 'Plugins' menu in WordPress
+1. Upload All files to the `/wp-content/plugins/` directory.
+2. Activate the plugin through the 'Plugins' menu in WordPress.
+3. Go to the Import page under Tools menu.
+4. Click CSV link, read the notification, then just upload and import.
 
 == Changelog ==
 
