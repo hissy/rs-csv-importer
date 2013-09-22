@@ -20,8 +20,7 @@ Alternative CSV Importer plugin. Simple and powerful.
 
 Contains CSV file sample in plugin_dir/rs-csv-importer/sample .
 
-Available values:
-
+= Available values: =
 * post_name: (string) post slug
 * post_author: (login or ID) author
 * post_date: (string) publish date
@@ -32,6 +31,8 @@ Available values:
 * post_category: (string, comma divided) slug of post categories
 * post_tags: (string, comma divided) name of post tags
 * {custom_field}: any other column labels used as custom field
+
+Add star and read future issues about rs-csv-importer on [GitHub](https://github.com/hissy/rs-csv-importer)!
 
 == Installation ==
 
