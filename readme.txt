@@ -18,7 +18,7 @@ Alternative CSV Importer plugin. Simple and powerful.
 * Custom field support
 * Custom post type support
 
-Contains CSV file sample in plugin_dir/rs-csv-importer/sample .
+Contains CSV file sample in plugin_dir/really-simple-csv-importer/sample .
 
 = Available values: =
 * post_name: (string) post slug
@@ -43,5 +43,7 @@ Add star and read future issues about rs-csv-importer on [GitHub](https://github
 
 == Changelog ==
 
+= 0.1.1 =
+* Bug fix
 = 0.1 =
 * First Release (beta)
