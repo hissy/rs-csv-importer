@@ -18,7 +18,7 @@ Alternative CSV Importer plugin. Simple and powerful.
 * Custom field support
 * Custom post type support
 
-Contains CSV file sample in plugin_dir/really-simple-csv-importer/sample .
+Contains CSV file sample in `/wp-content/plugins/really-simple-csv-importer/sample` directory.
 
 = Available values: =
 * post_name: (string) post slug
