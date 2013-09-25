@@ -119,14 +119,17 @@ class RS_CSV_Importer extends WP_Importer {
 	* @param array $meta
 	* More information: https://gist.github.com/4084471
 	*/
-	function save_post($post,$meta) {
+	function save_post($post,$meta,$is_update) {
 		$ph = new wp_post_helper($post);
 		
 		foreach ($meta as $key => $value) {
 			$ph->add_meta($key,$value,true);
 		}
 		
-		$ph->insert();
+		if ($is_update)
+			$ph->update();
+		else
+			$ph->insert();
 		
 		unset($ph);
 	}
@@ -152,6 +155,23 @@ class RS_CSV_Importer extends WP_Importer {
 				$is_first = false;
 			} else {
 				$post = array();
+				$is_update = false;
+				
+				// (int) post id
+				if (isset($this->columns['ID']) &&
+					isset($data[$this->columns['ID']]) &&
+					! empty($data[$this->columns['ID']])) {
+					$post['ID'] = $data[$this->columns['ID']];
+					unset($data[$this->columns['ID']]);
+					$is_update = true;
+				}
+				if (isset($this->columns['post_id']) &&
+					isset($data[$this->columns['post_id']]) &&
+					! empty($data[$this->columns['post_id']])) {
+					$post['post_id'] = $data[$this->columns['post_id']];
+					unset($data[$this->columns['post_id']]);
+					$is_update = true;
+				}
 				
 				// (string) post slug
 				if (isset($this->columns['post_name']) &&
@@ -252,7 +272,7 @@ class RS_CSV_Importer extends WP_Importer {
 					}
 				}
 				
-				$this->save_post($post,$meta);
+				$this->save_post($post,$meta,$is_update);
 				
 				echo '<li>'.esc_html($post['post_title']).'</li>';
 			}
