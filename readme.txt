@@ -3,7 +3,7 @@ Contributors: hissy, wokamoto
 Tags: importer, csv
 Requires at least: 3.0
 Tested up to: 3.6.1
-Stable tag: 0.1.1
+Stable tag: 0.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -21,13 +21,14 @@ Alternative CSV Importer plugin. Simple and powerful.
 Contains CSV file sample in `/wp-content/plugins/really-simple-csv-importer/sample` directory.
 
 = Available column names and values: =
-* post_name: (string) post slug
+* ID or post_id: (int) post id. update post data if this value is defined. default is insert
 * post_author: (login or ID) author
 * post_date: (string) publish date
-* post_type: (string) post type
-* post_status: (string) post status
-* post_title: (string) post title
 * post_content: (string) post content
+* post_title: (string) post title
+* post_status: (string) post status
+* post_name: (string) post slug
+* post_type: (string) post type
 * post_category: (string, comma divided) slug of post categories
 * post_tags: (string, comma divided) name of post tags
 * {custom_field}: any other column labels used as custom field
@@ -43,6 +44,9 @@ Add star and read future issues about rs-csv-importer on [GitHub](https://github
 
 == Changelog ==
 
+= 0.2 =
+* New feature: Add post_id column. It enables to update post data.
+* Some bug fixes
 = 0.1.1 =
 * Bug fix
 = 0.1 =
