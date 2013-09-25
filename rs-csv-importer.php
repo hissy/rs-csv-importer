@@ -77,6 +77,10 @@ class RS_CSV_Importer extends WP_Importer {
 		echo '<li>'.sprintf( __( 'You must use field delimiter as "%s"', 'rs-csv-importer'), self::DELIMITER ).'</li>';
 		echo '<li>'.__( 'You must quote all text cells.', 'rs-csv-importer' ).'</li>';
 		echo '</ol>';
+		echo '<p>'.__( 'Sample CSV file download:', 'rs-csv-importer' );
+		echo ' <a href="'.plugin_dir_url( __FILE__ ).'sample/sample.csv">'.__( 'csv', 'rs-csv-importer' ).'</a>,';
+		echo ' <a href="'.plugin_dir_url( __FILE__ ).'sample/sample.ods">'.__( 'ods (OpenDocument Spreadsheet file format)', 'rs-csv-importer' ).'</a>';
+		echo '</p>';
 		wp_import_upload_form( add_query_arg('step', 1) );
 	}
 
