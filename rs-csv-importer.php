@@ -1,12 +1,13 @@
 <?php
 /*
 Plugin Name: Really Simple CSV Importer
-Description: Import posts, custom fields, taxonomies from csv file.
+Plugin URI: http://wordpress.org/plugins/really-simple-csv-importer/
+Description: Import posts, categories, tags, custom fields from simple csv file.
 Author: Takuro Hishikawa, wokamoto
 Author URI: http://notnil-creative.com/
 Text Domain: rs-csv-importer
 License: GPL version 2 or later - http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
-Version: 0.1.1
+Version: 0.2
 */
 
 if ( !defined('WP_LOAD_IMPORTERS') )
@@ -322,6 +323,6 @@ class RS_CSV_Importer extends WP_Importer {
 // setup importer
 $rs_csv_importer = new RS_CSV_Importer();
 
-register_importer('csv', __('CSV', 'rs-csv-importer'), __('Import posts, custom fields, taxonomies from csv file.', 'rs-csv-importer'), array ($rs_csv_importer, 'dispatch'));
+register_importer('csv', __('CSV', 'rs-csv-importer'), __('Import posts, categories, tags, custom fields from simple csv file.', 'rs-csv-importer'), array ($rs_csv_importer, 'dispatch'));
 
 } // class_exists( 'WP_Importer' )
