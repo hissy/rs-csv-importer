@@ -122,6 +122,7 @@ class RS_CSV_Importer extends WP_Importer {
 	/** Insert post and postmeta using wp_post_helper
 	* @param array $post
 	* @param array $meta
+	* @param bool $is_update
 	* More information: https://gist.github.com/4084471
 	*/
 	function save_post($post,$meta,$is_update) {
