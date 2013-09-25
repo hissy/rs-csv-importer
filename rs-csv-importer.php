@@ -186,13 +186,14 @@ class RS_CSV_Importer extends WP_Importer {
 					isset($data[$this->columns['post_author']]) &&
 					! empty($data[$this->columns['post_author']])) {
 					$post_author = $data[$this->columns['post_author']];
-					if (is_int($post_author)) {
-						$post['post_author'] = $post_author;
+					if (is_numeric($post_author)) {
+						$user = get_user_by('id',$post_author);
 					} else {
-						$post_author = get_user_by('login',$post_author);
-						if (is_object($post_author)) {
-							$post['post_author'] = $data[$post_author->ID];
-						}
+						$user = get_user_by('login',$post_author);
+					}
+					if (isset($user) && is_object($user)) {
+						$post['post_author'] = $user->ID;
+						unset($user);
 					}
 					unset($data[$this->columns['post_author']]);
 					unset($post_author);
