@@ -7,7 +7,7 @@ Stable tag: 0.1.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Import posts, custom fields, taxonomies from csv file.
+Import posts, categories, tags, custom fields from simple csv file.
 
 == Description ==
 
@@ -20,7 +20,7 @@ Alternative CSV Importer plugin. Simple and powerful.
 
 Contains CSV file sample in `/wp-content/plugins/really-simple-csv-importer/sample` directory.
 
-= Available values: =
+= Available column names and values: =
 * post_name: (string) post slug
 * post_author: (login or ID) author
 * post_date: (string) publish date
