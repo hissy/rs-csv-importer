@@ -1,6 +1,6 @@
 === Really Simple CSV Importer ===
 Contributors: hissy, wokamoto
-Tags: importer, csv
+Tags: importer, csv, acf
 Requires at least: 3.0
 Tested up to: 3.6.1
 Stable tag: 0.3
