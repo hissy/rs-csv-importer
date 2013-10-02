@@ -3,7 +3,7 @@ Contributors: hissy, wokamoto
 Tags: importer, csv
 Requires at least: 3.0
 Tested up to: 3.6.1
-Stable tag: 0.2
+Stable tag: 0.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -16,12 +16,14 @@ Alternative CSV Importer plugin. Simple and powerful.
 * Category support
 * Tag support
 * Custom field support
+* Adcanved Custom Fields support (beta)
 * Custom post type support
 
 Contains CSV file sample in `/wp-content/plugins/really-simple-csv-importer/sample` directory.
 
 = Available column names and values: =
-* ID or post_id: (int) post id. update post data if this value is defined. default is insert
+* ID or post_id: (int) post id.  
+  This value is not required. The post ID is already exists in your blog, importer will update that post data. If the ID is not exists, importer will trying to create a new post with suggested ID.
 * post_author: (login or ID) author
 * post_date: (string) publish date
 * post_content: (string) post content
@@ -33,6 +35,13 @@ Contains CSV file sample in `/wp-content/plugins/really-simple-csv-importer/samp
 * post_tags: (string, comma divided) name of post tags
 * {custom_field}: any other column labels used as custom field
 
+= Advanced Custom Fields plugin integrate =
+If advanced custom field key is exists, importer will trying to use [update_field](http://www.advancedcustomfields.com/resources/functions/update_field/) function instead of built-in add_post_meta function.  
+How to find advanced custom field key: [Finding the field key](http://www.advancedcustomfields.com/resources/functions/update_field/#finding-the+field+key)
+
+Note: multiple value is not supported yet.
+
+= Official public repository =
 Add star and read future issues about rs-csv-importer on [GitHub](https://github.com/hissy/rs-csv-importer)!
 
 == Installation ==
@@ -44,6 +53,9 @@ Add star and read future issues about rs-csv-importer on [GitHub](https://github
 
 == Changelog ==
 
+= 0.3 =
+* New feature: Advanced Custom Fields integrate.
+* Enhancement: Use post_id if not already present when inserting post.
 = 0.2 =
 * New feature: Add post_id column. It enables to update post data.
 * Some bug fixes
