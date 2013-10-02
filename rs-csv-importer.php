@@ -136,15 +136,16 @@ class RS_CSV_Importer extends WP_Importer {
 				$is_update = false;
 				
 				// (int) post id
-				$id = $h->get_data($this,$data,'ID');
-				if ($id) {
-					$post['ID'] = $id;
-					$is_update = true;
-				}
-				$post_id = $h->get_data($this,$data,'post_id');
+				$post_id = $h->get_data($this,$data,'ID');
+				$post_id = ($post_id) ? $post_id : $h->get_data($this,$data,'post_id');
 				if ($post_id) {
-					$post['post_id'] = $post_id;
-					$is_update = true;
+					$post_exist = get_post($post_id);
+					if ( is_null( $post_exist ) ) {
+						$post['import_id'] = $post_id;
+					} else {
+						$post['ID'] = $post_id;
+						$is_update = true;
+					}
 				}
 				
 				// (string) post slug

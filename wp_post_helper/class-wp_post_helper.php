@@ -104,6 +104,10 @@ class wp_post_helper {
 			}
 			unset($post);
 		}
+		
+		if (isset($args['import_id'])) {
+			$this->post->import_id = $args['import_id'];
+		}
 
 		$post = $this->post;
 		foreach ($post as $key => &$val) {
