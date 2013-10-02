@@ -101,15 +101,28 @@ class RS_CSV_Importer extends WP_Importer {
 		$ph = new wp_post_helper($post);
 		
 		foreach ($meta as $key => $value) {
-			$ph->add_meta($key,$value,true);
+			$is_acf = 0;
+			if (function_exists('get_field_object')) {
+				if (strpos($key, 'field_') === 0) {
+					$fobj = get_field_object($key);
+					if (is_array($fobj) && isset($fobj['key']) && $fobj['key'] == $key) {
+						$ph->add_field($key,$value);
+						$is_acf = 1;
+					}
+				}
+			}
+			if (!$is_acf)
+				$ph->add_meta($key,$value,true);
 		}
 		
 		if ($is_update)
-			$ph->update();
+			$result = $ph->update();
 		else
-			$ph->insert();
+			$result = $ph->insert();
 		
 		unset($ph);
+		
+		return $result;
 	}
 
 	// process parse csv ind insert posts
@@ -238,9 +251,12 @@ class RS_CSV_Importer extends WP_Importer {
 					}
 				}
 				
-				$this->save_post($post,$meta,$is_update);
-				
-				echo '<li>'.esc_html($post['post_title']).'</li>';
+				$result = $this->save_post($post,$meta,$is_update);
+				if (!$result) {
+					echo '<li>'.sprintf(__('An error occurred during processing %s', 'rs-csv-importer'), esc_html($post['post_title'])).'</li>';
+				} else {
+					echo '<li>'.esc_html($post['post_title']).'</li>';
+				}
 			}
 		}
 		
