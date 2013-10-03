@@ -97,7 +97,7 @@ class RS_CSV_Importer extends WP_Importer {
 	* @param bool $is_update
 	* More information: https://gist.github.com/4084471
 	*/
-	function save_post($post,$meta,$is_update) {
+	function save_post($post,$meta,$terms,$is_update) {
 		$ph = new wp_post_helper($post);
 		
 		foreach ($meta as $key => $value) {
@@ -113,6 +113,10 @@ class RS_CSV_Importer extends WP_Importer {
 			}
 			if (!$is_acf)
 				$ph->add_meta($key,$value,true);
+		}
+
+		foreach ($terms as $key => $value) {
+			$ph->add_terms($key, $value);
 		}
 		
 		if ($is_update)
@@ -245,13 +249,29 @@ class RS_CSV_Importer extends WP_Importer {
 				}
 				
 				$meta = array();
+				$tax = array();
+
 				foreach ($data as $key => $value) {
 					if (!empty($value) && isset($this->column_keys[$key])) {
-						$meta[$this->column_keys[$key]] = $value;
+						// check if meta is custom taxonomy
+						if (substr($this->column_keys[$key], 0, 4) == 'tax_') {
+							// (string, comma divided) name of custom taxonomies 
+							
+							// modified preg_split to only split on commas
+							$customtaxes = preg_split("/,\s+/", $value);
+							$taxname = substr($this->column_keys[$key], 4);
+							$tax[$taxname] = array();
+							foreach($customtaxes as $key => $value ) {
+								$tax[$taxname][] = $value;
+							}
+						}
+						else {
+							$meta[$this->column_keys[$key]] = $value;
+						}
 					}
 				}
 				
-				$result = $this->save_post($post,$meta,$is_update);
+				$result = $this->save_post($post,$meta,$tax,$is_update);
 				if (!$result) {
 					echo '<li>'.sprintf(__('An error occurred during processing %s', 'rs-csv-importer'), esc_html($post['post_title'])).'</li>';
 				} else {
