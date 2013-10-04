@@ -1,0 +1,5 @@
+"post_id","post_parent","post_type","post_status","post_title","post_content","menu_order"
+,,"page","publish","Import Page Test",,
+,2,"page",,"Child Page Test","This page is child of sample page",1
+,2,"page",,"Child Page Test 3",,3
+,2,"page",,"Child Page Test 2",,2
