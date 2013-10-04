@@ -94,6 +94,7 @@ class RS_CSV_Importer extends WP_Importer {
 	/** Insert post and postmeta using wp_post_helper
 	* @param array $post
 	* @param array $meta
+	* @param array $terms
 	* @param bool $is_update
 	* More information: https://gist.github.com/4084471
 	*/
