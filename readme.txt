@@ -3,7 +3,7 @@ Contributors: hissy, wokamoto
 Tags: importer, csv, acf
 Requires at least: 3.0
 Tested up to: 3.6.1
-Stable tag: 0.3
+Stable tag: 0.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -17,7 +17,8 @@ Alternative CSV Importer plugin. Simple and powerful.
 * Tag support
 * Custom field support
 * Adcanved Custom Fields support (beta)
-* Custom post type support
+* Custom Taxonomy support
+* Custom Post Type support
 
 Contains CSV file sample in `/wp-content/plugins/really-simple-csv-importer/sample` directory.
 
@@ -41,7 +42,7 @@ Contains CSV file sample in `/wp-content/plugins/really-simple-csv-importer/samp
 
 = Advanced Custom Fields plugin integrate =
 If advanced custom field key is exists, importer will trying to use [update_field](http://www.advancedcustomfields.com/resources/functions/update_field/) function instead of built-in add_post_meta function.  
-How to find advanced custom field key: [Finding the field key](http://www.advancedcustomfields.com/resources/functions/update_field/#finding-the+field+key)
+How to find advanced custom field key: [Finding the field key](http://www.advancedcustomfields.com/resources/functions/update_field/#finding-the%20field%20key)
 
 Note: multiple value is not supported yet.
 
@@ -57,6 +58,8 @@ Add star and read future issues about rs-csv-importer on [GitHub](https://github
 
 == Changelog ==
 
+= 0.4 =
+* New feature: Added custom taxonomy support. Thanks chuckhendo!
 = 0.3 =
 * New feature: Advanced Custom Fields integrate.
 * Enhancement: Use post_id if not already present when inserting post.
