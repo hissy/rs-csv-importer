@@ -233,7 +233,7 @@ class RS_CSV_Importer extends WP_Importer {
 				// (string, comma divided) slug of post categories
 				$post_category = $h->get_data($this,$data,'post_category');
 				if ($post_category) {
-					$categories = preg_split("/[\s,]+/", $post_category);
+					$categories = preg_split("/,+/", $post_category);
 					if ($categories) {
 						$post['post_category'] = wp_create_categories($categories);
 					}
@@ -242,7 +242,7 @@ class RS_CSV_Importer extends WP_Importer {
 				// (string, comma divided) name of post tags
 				$post_tags = $h->get_data($this,$data,'post_tags');
 				if ($post_tags) {
-					$tags = preg_split("/[\s,]+/", $post_tags);
+					$tags = preg_split("/,+/", $post_tags);
 					if ($tags) {
 						$post['post_tags'] = $tags;
 					}
@@ -256,9 +256,7 @@ class RS_CSV_Importer extends WP_Importer {
 						// check if meta is custom taxonomy
 						if (substr($this->column_keys[$key], 0, 4) == 'tax_') {
 							// (string, comma divided) name of custom taxonomies 
-							
-							// modified preg_split to only split on commas
-							$customtaxes = preg_split("/,\s+/", $value);
+							$customtaxes = preg_split("/,+/", $value);
 							$taxname = substr($this->column_keys[$key], 4);
 							$tax[$taxname] = array();
 							foreach($customtaxes as $key => $value ) {
