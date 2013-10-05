@@ -205,7 +205,10 @@ class RS_CSV_Importer extends WP_Importer {
 				}
 				
 				// (string) post title
-				$post['post_title'] = $h->get_data($this,$data,'post_title');
+				$post_title = $h->get_data($this,$data,'post_title');
+				if ($post_title) {
+					$post['post_title'] = $post_title;
+				}
 				
 				// (string) post content
 				$post_content = $h->get_data($this,$data,'post_content');
@@ -272,9 +275,9 @@ class RS_CSV_Importer extends WP_Importer {
 				
 				$result = $this->save_post($post,$meta,$tax,$is_update);
 				if (!$result) {
-					echo '<li>'.sprintf(__('An error occurred during processing %s', 'rs-csv-importer'), esc_html($post['post_title'])).'</li>';
+					echo '<li>'.sprintf(__('An error occurred during processing %s', 'rs-csv-importer'), esc_html($post_title)).'</li>';
 				} else {
-					echo '<li>'.esc_html($post['post_title']).'</li>';
+					echo '<li>'.esc_html($post_title).'</li>';
 				}
 			}
 		}
