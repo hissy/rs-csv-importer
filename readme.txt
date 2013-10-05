@@ -35,7 +35,7 @@ Contains CSV file sample in `/wp-content/plugins/really-simple-csv-importer/samp
 * `post_parent`: (int) post parent id. Used for page or hierarchical post type.
 * `menu_order`: (int)
 * `post_type`: (string) post type
-* `post_category: (string, comma divided) slug of post categories
+* `post_category`: (string, comma divided) slug of post categories
 * `post_tags`: (string, comma divided) name of post tags
 * `{custom_field}`: (string) any other column labels used as custom field
 * `{tax_$taxonomy}`: (string, comma divided) any field prefixed with tax_ in the "custom_field" area will be used as a custom taxonomy. Taxonomy must already exist. Entries are names, not slugs
