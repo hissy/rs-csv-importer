@@ -23,22 +23,22 @@ Alternative CSV Importer plugin. Simple and powerful.
 Contains CSV file sample in `/wp-content/plugins/really-simple-csv-importer/sample` directory.
 
 = Available column names and values: =
-* ID or post_id: (int) post id.  
+* `ID` or `post_id`: (int) post id.  
   This value is not required. The post ID is already exists in your blog, importer will update that post data. If the ID is not exists, importer will trying to create a new post with suggested ID.
-* post_author: (login or ID) author
-* post_date: (string) publish date
-* post_content: (string) post content
-* post_title: (string) post title
-* post_excerpt: (string) post excerpt
-* post_status: (string) post status
-* post_name: (string) post slug
-* post_parent: (int) post parent id. Used for page or hierarchical post type.
-* menu_order: (int)
-* post_type: (string) post type
-* post_category: (string, comma divided) slug of post categories
-* post_tags: (string, comma divided) name of post tags
-* {custom_field}: (string) any other column labels used as custom field
-* {tax_$taxonomy}: (string, comma divided) any field prefixed with tax_ in the "custom_field" area will be used as a custom taxonomy. Taxonomy must already exist. Entries are names, not slugs
+* `post_author`: (login or ID) author
+* `post_date`: (string) publish date
+* `post_content`: (string) post content
+* `post_title`: (string) post title
+* `post_excerpt`: (string) post excerpt
+* `post_status`: (string) post status
+* `post_name`: (string) post slug
+* `post_parent`: (int) post parent id. Used for page or hierarchical post type.
+* `menu_order`: (int)
+* `post_type`: (string) post type
+* `post_category: (string, comma divided) slug of post categories
+* `post_tags`: (string, comma divided) name of post tags
+* `{custom_field}`: (string) any other column labels used as custom field
+* `{tax_$taxonomy}`: (string, comma divided) any field prefixed with tax_ in the "custom_field" area will be used as a custom taxonomy. Taxonomy must already exist. Entries are names, not slugs
 
 = Advanced Custom Fields plugin integrate =
 If advanced custom field key is exists, importer will trying to use [update_field](http://www.advancedcustomfields.com/resources/functions/update_field/) function instead of built-in add_post_meta function.  
