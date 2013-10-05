@@ -3,7 +3,7 @@ Contributors: hissy, wokamoto
 Tags: importer, csv, acf
 Requires at least: 3.0
 Tested up to: 3.6.1
-Stable tag: 0.4
+Stable tag: 0.4.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -58,6 +58,8 @@ Add star and read future issues about rs-csv-importer on [GitHub](https://github
 
 == Changelog ==
 
+= 0.4.1 =
+* Version fix
 = 0.4 =
 * New feature: Added custom taxonomy support. Thanks chuckhendo!
 = 0.3 =
