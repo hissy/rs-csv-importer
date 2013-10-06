@@ -75,13 +75,15 @@ Example:
 function really_simple_csv_importer_save_post_filter( $post, $is_update ) {
 	
 	// remove specific tag from import data
-	$_tags = array();
-	foreach ($post['post_tags'] as $tag) {
-		if ($tag != 'Apple') {
-			$_tags[] = $tag;
+	if (isset($post['post_tags'])) {
+		$_tags = array();
+		foreach ($post['post_tags'] as $tag) {
+			if ($tag != 'Apple') {
+				$_tags[] = $tag;
+			}
 		}
+		$post['post_tags'] = $_tags;
 	}
-	$post['post_tags'] = $_tags;
 	
 	return $post;
 }
