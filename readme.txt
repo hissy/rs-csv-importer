@@ -16,29 +16,32 @@ Alternative CSV Importer plugin. Simple and powerful.
 * Category support
 * Tag support
 * Custom field support
-* Adcanved Custom Fields support (beta)
+* Advanced Custom Fields support (beta)
 * Custom Taxonomy support
 * Custom Post Type support
 
-Contains CSV file sample in `/wp-content/plugins/really-simple-csv-importer/sample` directory.
+Contains CSV file samples in `/wp-content/plugins/really-simple-csv-importer/sample` directory.
 
 = Available column names and values: =
 * `ID` or `post_id`: (int) post id.  
   This value is not required. The post ID is already exists in your blog, importer will update that post data. If the ID is not exists, importer will trying to create a new post with suggested ID.
-* `post_author`: (login or ID) author
-* `post_date`: (string) publish date
-* `post_content`: (string) post content
-* `post_title`: (string) post title
-* `post_excerpt`: (string) post excerpt
-* `post_status`: (string) post status
-* `post_name`: (string) post slug
-* `post_parent`: (int) post parent id. Used for page or hierarchical post type.
+* `post_author`: (login or ID) The user name or user ID number of the author.
+* `post_date`: (string) The time of publish date.
+* `post_content`: (string) The full text of the post.
+* `post_title`: (string) The title of the post.
+* `post_excerpt`: (string) For all your post excerpt needs.
+* `post_status`: ('draft' or 'publish' or 'pending' or 'future' or 'private' or custom registered status) The status of the post.
+* `post_name`: (string) The slug of the post.
+* `post_parent`: (int) The post parent id. Used for page or hierarchical post type.
 * `menu_order`: (int)
-* `post_type`: (string) post type
+* `post_type`: ('post' or 'page' or any other post type name)
 * `post_category`: (string, comma divided) slug of post categories
 * `post_tags`: (string, comma divided) name of post tags
 * `{custom_field}`: (string) any other column labels used as custom field
-* `{tax_$taxonomy}`: (string, comma divided) any field prefixed with tax_ in the "custom_field" area will be used as a custom taxonomy. Taxonomy must already exist. Entries are names, not slugs
+* `{tax_$taxonomy}`: (string, comma divided) any field prefixed with tax_ in the "custom_field" area will be used as a custom taxonomy. Entries are names, not slugs
+
+Note: To set the page template of a page, use custom field key of `wp_page_template`.
+Note: If providing a post_status of 'future' you must specify the post_date in order for WordPress to know when to publish your post.
 
 = Advanced Custom Fields plugin integrate =
 If advanced custom field key is exists, importer will trying to use [update_field](http://www.advancedcustomfields.com/resources/functions/update_field/) function instead of built-in add_post_meta function.  
@@ -66,8 +69,8 @@ This filter is applied to post data.
 
 Parameters:
 
-* $post - (array)(required) post data
-* $is_update (bool) update existing post data, or insert new post data
+* `$post` - (array)(required) post data
+* `$is_update` - (bool) update existing post data, or insert new post data
 
 Example:
 
@@ -96,9 +99,9 @@ This filter is applied to post meta data.
 
 Parameters:
 
-* $meta - (array)(required) post meta data
-* $post - (array) post data
-* $is_update (bool)
+* `$meta` - (array)(required) post meta data
+* `$post` - (array) post data
+* `$is_update` - (bool)
 
 Example:
 
@@ -122,9 +125,9 @@ This filter is applied to post taxonomy data (categories and tags are not includ
 
 Parameters:
 
-* $tax - (array)(required) post taxonomy data
-* $post - (array) post data
-* $is_update (bool)
+* `$tax` - (array)(required) post taxonomy data
+* `$post` - (array) post data
+* `$is_update` - (bool)
 
 Example:
 
