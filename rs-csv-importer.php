@@ -273,6 +273,10 @@ class RS_CSV_Importer extends WP_Importer {
 					}
 				}
 				
+				$post = apply_filters( 'really_simple_csv_importer_save_post', $post, $is_update );
+				$meta = apply_filters( 'really_simple_csv_importer_save_meta', $meta, $post, $is_update );
+				$tax = apply_filters( 'really_simple_csv_importer_save_tax', $tax, $post, $is_update );
+				
 				$result = $this->save_post($post,$meta,$tax,$is_update);
 				if (!$result) {
 					echo '<li>'.sprintf(__('An error occurred during processing %s', 'rs-csv-importer'), esc_html($post_title)).'</li>';
