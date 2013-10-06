@@ -40,7 +40,7 @@ Contains CSV file samples in `/wp-content/plugins/really-simple-csv-importer/sam
 * `{custom_field}`: (string) any other column labels used as custom field
 * `{tax_$taxonomy}`: (string, comma divided) any field prefixed with tax_ in the "custom_field" area will be used as a custom taxonomy. Entries are names, not slugs
 
-Note: To set the page template of a page, use custom field key of `wp_page_template`.
+Note: To set the page template of a page, use custom field key of `_wp_page_template`.
 Note: If providing a post_status of 'future' you must specify the post_date in order for WordPress to know when to publish your post.
 
 = Advanced Custom Fields plugin integrate =
