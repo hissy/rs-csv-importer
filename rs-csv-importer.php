@@ -91,12 +91,16 @@ class RS_CSV_Importer extends WP_Importer {
 			return $result;
 	}
 	
-	/** Insert post and postmeta using wp_post_helper
+	/**
+	* Insert post and postmeta using wp_post_helper.
+	*
+	* More information: https://gist.github.com/4084471
+	*
 	* @param array $post
 	* @param array $meta
 	* @param array $terms
 	* @param bool $is_update
-	* More information: https://gist.github.com/4084471
+	* @return int|false Saved post id. If failed, return false.
 	*/
 	function save_post($post,$meta,$terms,$is_update) {
 		$ph = new wp_post_helper($post);
@@ -255,6 +259,7 @@ class RS_CSV_Importer extends WP_Importer {
 				$meta = array();
 				$tax = array();
 
+				// add any other data to post meta
 				foreach ($data as $key => $value) {
 					if (!empty($value) && isset($this->column_keys[$key])) {
 						// check if meta is custom taxonomy
@@ -273,10 +278,31 @@ class RS_CSV_Importer extends WP_Importer {
 					}
 				}
 				
+				/**
+				 * Filter post data.
+				 *
+				 * @param array $post (required)
+				 * @param bool $is_update
+				 */
 				$post = apply_filters( 'really_simple_csv_importer_save_post', $post, $is_update );
+				/**
+				 * Filter meta data.
+				 *
+				 * @param array $meta (required)
+				 * @param array $post
+				 * @param bool $is_update
+				 */
 				$meta = apply_filters( 'really_simple_csv_importer_save_meta', $meta, $post, $is_update );
+				/**
+				 * Filter taxonomy data.
+				 *
+				 * @param array $tax (required)
+				 * @param array $post
+				 * @param bool $is_update
+				 */
 				$tax = apply_filters( 'really_simple_csv_importer_save_tax', $tax, $post, $is_update );
 				
+				// save post data
 				$result = $this->save_post($post,$meta,$tax,$is_update);
 				if (!$result) {
 					echo '<li>'.sprintf(__('An error occurred during processing %s', 'rs-csv-importer'), esc_html($post_title)).'</li>';
