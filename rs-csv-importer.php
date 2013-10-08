@@ -154,19 +154,32 @@ class RS_CSV_Importer extends WP_Importer {
 				$h->parse_columns( $this, $data );
 				$is_first = false;
 			} else {
+				echo '<li>';
+				
 				$post = array();
 				$is_update = false;
+				$error = new WP_Error();
+				
+				// (string) post type
+				$post_type = $h->get_data($this,$data,'post_type');
+				if ($post_type) {
+					$post['post_type'] = $post_type;
+				}
 				
 				// (int) post id
 				$post_id = $h->get_data($this,$data,'ID');
 				$post_id = ($post_id) ? $post_id : $h->get_data($this,$data,'post_id');
 				if ($post_id) {
 					$post_exist = get_post($post_id);
-					if ( is_null( $post_exist ) ) {
+					if ( is_null( $post_exist ) ) { // if the post id is not exists
 						$post['import_id'] = $post_id;
 					} else {
-						$post['ID'] = $post_id;
-						$is_update = true;
+						if ( !$post_type || $post_exist->post_type == $post_type ) {
+							$post['ID'] = $post_id;
+							$is_update = true;
+						} else {
+							$error->add( 'post_type_check', sprintf(__('The post id %d is exists, but post types does not match.', 'rs-csv-importer'), $post_id) );
+						}
 					}
 				}
 				
@@ -194,12 +207,6 @@ class RS_CSV_Importer extends WP_Importer {
 				$post_date = $h->get_data($this,$data,'post_date');
 				if ($post_date) {
 					$post['post_date'] = date("Y-m-d H:i:s", strtotime($post_date));
-				}
-				
-				// (string) post type
-				$post_type = $h->get_data($this,$data,'post_type');
-				if ($post_type) {
-					$post['post_type'] = $post_type;
 				}
 				
 				// (string) post status
@@ -305,10 +312,16 @@ class RS_CSV_Importer extends WP_Importer {
 				// save post data
 				$result = $this->save_post($post,$meta,$tax,$is_update);
 				if (!$result) {
-					echo '<li>'.sprintf(__('An error occurred during processing %s', 'rs-csv-importer'), esc_html($post_title)).'</li>';
-				} else {
-					echo '<li>'.esc_html($post_title).'</li>';
+					$error->add( 'save_post', sprintf(__('An error occurred while saving the post to database.', 'rs-csv-importer')) );
 				}
+				
+				// show results
+				foreach ($error->get_error_messages() as $message) {
+					echo esc_html($message).'<br>';
+				}
+				echo esc_html(sprintf(__('Processing "%s" done.', 'rs-csv-importer'), $post_title));
+				
+				echo '</li>';
 			}
 		}
 		
