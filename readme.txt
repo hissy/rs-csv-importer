@@ -3,7 +3,7 @@ Contributors: hissy, wokamoto
 Tags: importer, csv, acf
 Requires at least: 3.0
 Tested up to: 3.6.1
-Stable tag: 0.5
+Stable tag: 0.5.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -153,9 +153,10 @@ add_filter( 'really_simple_csv_importer_save_tax', 'really_simple_csv_importer_s
 
 == Changelog ==
 
+= 0.5.1 =
+* Enhancement: Check whether both posts has same post type when updating.
 = 0.5 =
 * New feature: Added filter hooks to customize import data
-* Bug fix
 = 0.4.2 =
 * Post title bug fix
 = 0.4.1 =
