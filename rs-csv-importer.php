@@ -266,6 +266,11 @@ class RS_CSV_Importer extends WP_Importer {
 					}
 				}
 				
+				// (string) post thumbnail image uri
+				$post_thumbnail = $h->get_data($this,$data,'post_thumbnail');
+				if (parse_url($post_thumbnail, PHP_URL_SCHEME))
+					$post_thumbnail = remote_get_file($post_thumbnail);
+				
 				$meta = array();
 				$tax = array();
 
@@ -287,11 +292,6 @@ class RS_CSV_Importer extends WP_Importer {
 						}
 					}
 				}
-				
-				// (string) post thumbnail image uri
-				$post_thumbnail = $h->get_data($this,$data,'post_thumbnail');
-				if (parse_url($post_thumbnail, PHP_URL_SCHEME))
-					$post_thumbnail = remote_get_file($post_thumbnail);
 				
 				/**
 				 * Filter post data.

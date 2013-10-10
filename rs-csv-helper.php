@@ -38,6 +38,8 @@ class RS_CSV_Helper {
 				$value = $array[$index];
 				unset($array[$index]);
 				return $value;
+			} elseif (isset($array[$index])) {
+				unset($array[$index]);
 			}
 		}
 		
