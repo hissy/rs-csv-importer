@@ -5,15 +5,15 @@ class RS_CSV_Helper {
 	const DELIMITER = ",";
 	
 	// File utility functions
-	function fopen($filename, $mode='r') {
+	public function fopen($filename, $mode='r') {
 		return fopen($filename, $mode);
 	}
 
-	function fgetcsv($handle, $length = 0) {
+	public function fgetcsv($handle, $length = 0) {
 		return fgetcsv($handle, $length, self::DELIMITER);
 	}
 
-	function fclose($fp) {
+	public function fclose($fp) {
 		return fclose($fp);
  	}
 	
@@ -28,7 +28,7 @@ class RS_CSV_Helper {
 		$obj->column_keys = array_combine($keys, $values);
 	}
 	
-	public function get_data(&$obj, &$array, $key) {
+	public function get_data($obj, &$array, $key) {
 		if (!isset($obj->column_indexes) || !is_array($array) || count($array) == 0)
 			return false;
 		

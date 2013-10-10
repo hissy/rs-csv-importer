@@ -309,6 +309,7 @@ class wp_post_helper {
 	}
 }
 
+if (!function_exists('remote_get_file')) :
 function remote_get_file($url = null, $file_dir = '') {
 	if (!$url)
 		return false;
@@ -336,7 +337,11 @@ function remote_get_file($url = null, $file_dir = '') {
 	// remote get!
 	$photo = $file_dir . basename($url);
 	if ( !file_exists($photo) ) {
-		$response = wp_remote_get($url);
+		if (function_exists('wp_safe_remote_get')) {
+			$response = wp_safe_remote_get($url);
+		} else {
+			$response = wp_remote_get($url);
+		}
 		if ( !is_wp_error($response) && $response["response"]["code"] === 200 ) {
 			$photo_data = $response["body"];
 			file_put_contents($photo, $photo_data);
@@ -348,5 +353,6 @@ function remote_get_file($url = null, $file_dir = '') {
 	}
 	return file_exists($photo) ? $photo : false;
 }
+endif;
 
 endif;
