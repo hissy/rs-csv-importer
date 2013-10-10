@@ -3,7 +3,7 @@ Contributors: hissy, wokamoto
 Tags: importer, csv, acf
 Requires at least: 3.0
 Tested up to: 3.6.1
-Stable tag: 0.5.1
+Stable tag: 0.5.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -35,6 +35,7 @@ Contains CSV file samples in `/wp-content/plugins/really-simple-csv-importer/sam
 * `post_parent`: (int) The post parent id. Used for page or hierarchical post type.
 * `menu_order`: (int)
 * `post_type`: ('post' or 'page' or any other post type name)
+* `post_thumbnail`: (string) The uri or path of the post thumbnail.
 * `post_category`: (string, comma divided) slug of post categories
 * `post_tags`: (string, comma divided) name of post tags
 * `{custom_field}`: (string) any other column labels used as custom field
@@ -47,7 +48,7 @@ Note: If providing a post_status of 'future' you must specify the post_date in o
 If advanced custom field key is exists, importer will trying to use [update_field](http://www.advancedcustomfields.com/resources/functions/update_field/) function instead of built-in add_post_meta function.  
 How to find advanced custom field key: [Finding the field key](http://www.advancedcustomfields.com/resources/functions/update_field/#finding-the%20field%20key)
 
-Note: multiple value is not supported yet.
+Note: If you use multiple value field like Select, please use `really_simple_csv_importer_save_meta` filter to make array data.
 
 = Official public repository =
 Add star and read future issues about rs-csv-importer on [GitHub](https://github.com/hissy/rs-csv-importer)!

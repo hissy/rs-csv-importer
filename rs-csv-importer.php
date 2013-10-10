@@ -7,7 +7,7 @@ Author: Takuro Hishikawa, wokamoto
 Author URI: http://notnil-creative.com/
 Text Domain: rs-csv-importer
 License: GPL version 2 or later - http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
-Version: 0.5.1
+Version: 0.5.2
 */
 
 if ( !defined('WP_LOAD_IMPORTERS') )
@@ -320,7 +320,7 @@ class RS_CSV_Importer extends WP_Importer {
 				// save post data
 				$result = $this->save_post($post,$meta,$tax,$post_thumbnail,$is_update);
 				if (!$result) {
-					$error->add( 'save_post', sprintf(__('An error occurred while saving the post to database.', 'rs-csv-importer')) );
+					$error->add( 'save_post', __('An error occurred while saving the post to database.', 'rs-csv-importer') );
 				}
 				
 				// show results
