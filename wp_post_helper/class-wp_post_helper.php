@@ -297,7 +297,7 @@ class wp_post_helper {
 		if (!$this->postid)
 			$this->metas[$metakey] = array($val, $unique);
 		else
-			return $val ? add_post_meta($this->postid, $metakey, $val, $unique) : false;
+			return (isset($val) && $val !== false) ? add_post_meta($this->postid, $metakey, $val, $unique) : false;
 	}
 
 	// Add Advanced Custom Field

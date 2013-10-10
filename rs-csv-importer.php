@@ -276,7 +276,7 @@ class RS_CSV_Importer extends WP_Importer {
 
 				// add any other data to post meta
 				foreach ($data as $key => $value) {
-					if (!empty($value) && isset($this->column_keys[$key])) {
+					if ($value !== false && isset($this->column_keys[$key])) {
 						// check if meta is custom taxonomy
 						if (substr($this->column_keys[$key], 0, 4) == 'tax_') {
 							// (string, comma divided) name of custom taxonomies 
