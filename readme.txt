@@ -35,7 +35,8 @@ Contains CSV file samples in `/wp-content/plugins/really-simple-csv-importer/sam
 * `post_parent`: (int) The post parent id. Used for page or hierarchical post type.
 * `menu_order`: (int)
 * `post_type`: ('post' or 'page' or any other post type name)
-* `post_thumbnail`: (string) The uri or path of the post thumbnail.
+* `post_thumbnail`: (string) The uri or path of the post thumbnail.  
+  E.g. http://example.com/example.jpg or /path/to/example.jpg
 * `post_category`: (string, comma divided) slug of post categories
 * `post_tags`: (string, comma divided) name of post tags
 * `{custom_field}`: (string) any other column labels used as custom field
@@ -154,6 +155,9 @@ add_filter( 'really_simple_csv_importer_save_tax', 'really_simple_csv_importer_s
 
 == Changelog ==
 
+= 0.5.2 =
+* New feature: Add Post Thumbnail support
+* Bug fixes
 = 0.5.1 =
 * Enhancement: Check whether both posts has same post type when updating.
 = 0.5 =
