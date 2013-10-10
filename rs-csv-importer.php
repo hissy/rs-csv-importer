@@ -4,7 +4,7 @@ Plugin Name: Really Simple CSV Importer
 Plugin URI: http://wordpress.org/plugins/really-simple-csv-importer/
 Description: Import posts, categories, tags, custom fields from simple csv file.
 Author: Takuro Hishikawa, wokamoto
-Author URI: http://notnil-creative.com/
+Author URI: https://en.digitalcube.jp/
 Text Domain: rs-csv-importer
 License: GPL version 2 or later - http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 Version: 0.5.2

@@ -49,8 +49,6 @@ Note: If providing a post_status of 'future' you must specify the post_date in o
 If advanced custom field key is exists, importer will trying to use [update_field](http://www.advancedcustomfields.com/resources/functions/update_field/) function instead of built-in add_post_meta function.  
 How to find advanced custom field key: [Finding the field key](http://www.advancedcustomfields.com/resources/functions/update_field/#finding-the%20field%20key)
 
-Note: If you use multiple value field like Select, please use `really_simple_csv_importer_save_meta` filter to make array data.
-
 = Official public repository =
 Add star and read future issues about rs-csv-importer on [GitHub](https://github.com/hissy/rs-csv-importer)!
 
@@ -61,7 +59,31 @@ Add star and read future issues about rs-csv-importer on [GitHub](https://github
 3. Go to the Import page under Tools menu.
 4. Click CSV link, read the notification, then just upload and import.
 
-== How to customize import rules == 
+== Frequently Asked Questions ==
+
+= Should I fill all columns of post data? =
+
+No. Only columns you need.
+
+= Can I update existing post data? =
+
+Yes. Please use ID field.
+
+= Can I insert post with specific post id? =
+
+Yes. Please use ID field.
+
+= Why should I quote text cells when I save csv file? =
+
+Because PHP cannot read multibyte text cells in some cases.
+
+> Locale setting is taken into account by this function. If LANG is e.g. en_US.UTF-8, files in one-byte encoding are read wrong by this function.
+
+= Can I insert multiple value to ACF field like Select or Checkbox? =
+
+Yes. Please use `really_simple_csv_importer_save_meta` filter to make array data.
+
+== How to customize import post data == 
 
 There are three filters available in the importer.
 
