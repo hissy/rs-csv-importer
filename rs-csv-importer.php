@@ -7,7 +7,7 @@ Author: Takuro Hishikawa, wokamoto
 Author URI: https://en.digitalcube.jp/
 Text Domain: rs-csv-importer
 License: GPL version 2 or later - http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
-Version: 0.5.2
+Version: 0.5.3
 */
 
 if ( !defined('WP_LOAD_IMPORTERS') )
@@ -163,10 +163,16 @@ class RS_CSV_Importer extends WP_Importer {
 				$is_update = false;
 				$error = new WP_Error();
 				
-				// (string) post type
+				// (string) (required) post type
 				$post_type = $h->get_data($this,$data,'post_type');
 				if ($post_type) {
-					$post['post_type'] = $post_type;
+					if (post_type_exists($post_type)) {
+						$post['post_type'] = $post_type;
+					} else {
+						$error->add( 'post_type_exists', sprintf(__('The post type %s is not exists. Please check your csv data.', 'rs-csv-importer'), $post_type) );
+					}
+				} else {
+					echo __('Note: Please include post_type value if that is possible.', 'rs-csv-importer').'<br>';
 				}
 				
 				// (int) post id
@@ -317,17 +323,20 @@ class RS_CSV_Importer extends WP_Importer {
 				 */
 				$tax = apply_filters( 'really_simple_csv_importer_save_tax', $tax, $post, $is_update );
 				
-				// save post data
-				$result = $this->save_post($post,$meta,$tax,$post_thumbnail,$is_update);
-				if (!$result) {
-					$error->add( 'save_post', __('An error occurred while saving the post to database.', 'rs-csv-importer') );
+				if (!$error->get_error_codes()) {
+					// save post data
+					$result = $this->save_post($post,$meta,$tax,$post_thumbnail,$is_update);
+					if ($result) {
+						echo esc_html(sprintf(__('Processing "%s" done.', 'rs-csv-importer'), $post_title));
+					} else {
+						$error->add( 'save_post', __('An error occurred while saving the post to database.', 'rs-csv-importer') );
+					}
 				}
 				
-				// show results
+				// show error messages
 				foreach ($error->get_error_messages() as $message) {
 					echo esc_html($message).'<br>';
 				}
-				echo esc_html(sprintf(__('Processing "%s" done.', 'rs-csv-importer'), $post_title));
 				
 				echo '</li>';
 			}

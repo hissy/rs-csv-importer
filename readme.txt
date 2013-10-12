@@ -3,7 +3,7 @@ Contributors: hissy, wokamoto
 Tags: importer, csv, acf
 Requires at least: 3.0
 Tested up to: 3.6.1
-Stable tag: 0.5.2
+Stable tag: 0.5.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -30,17 +30,17 @@ Contains CSV file samples in `/wp-content/plugins/really-simple-csv-importer/sam
 * `post_content`: (string) The full text of the post.
 * `post_title`: (string) The title of the post.
 * `post_excerpt`: (string) For all your post excerpt needs.
-* `post_status`: ('draft' or 'publish' or 'pending' or 'future' or 'private' or custom registered status) The status of the post.
+* `post_status`: ('draft' or 'publish' or 'pending' or 'future' or 'private' or custom registered status) The status of the post. 'draft' is default.
 * `post_name`: (string) The slug of the post.
 * `post_parent`: (int) The post parent id. Used for page or hierarchical post type.
 * `menu_order`: (int)
-* `post_type`: ('post' or 'page' or any other post type name)
+* `post_type`: ('post' or 'page' or any other post type name) *(required)* The post type slug, not labels.
 * `post_thumbnail`: (string) The uri or path of the post thumbnail.  
   E.g. http://example.com/example.jpg or /path/to/example.jpg
 * `post_category`: (string, comma divided) slug of post categories
 * `post_tags`: (string, comma divided) name of post tags
-* `{custom_field}`: (string) any other column labels used as custom field
-* `{tax_$taxonomy}`: (string, comma divided) any field prefixed with tax_ in the "custom_field" area will be used as a custom taxonomy. Entries are names, not slugs
+* `{custom_field}`: (string) Any other column labels used as custom field
+* `tax_{taxonomy}`: (string, comma divided) Any field prefixed with tax_ in the "custom_field" area will be used as a custom taxonomy. Taxonomy must already exist. Entries are names, not slugs
 
 Note: To set the page template of a page, use custom field key of `_wp_page_template`.  
 Note: If providing a post_status of 'future' you must specify the post_date in order for WordPress to know when to publish your post.
@@ -72,6 +72,21 @@ Yes. Please use ID field.
 = Can I insert post with specific post id? =
 
 Yes. Please use ID field.
+
+= Can I import custom field/custom taxonomy of the post? =
+
+Yes. You can use column names same as wp_post table, but if the column name does not match, it creates a custom field (post meta) data. Importing custom taxonomy is a bit more complicated, "tax_$taxonomy" means, "tax_" is prefix, and $taxonomy is name of custom taxonomy (not labels).
+
+Here is a example.
+
+**csv file**
+"post_title","released","tax_actors"
+"Captain Phillips","2013","Tom Hanks, Barkhad Abdi, Barkhad Abdirahman"
+
+**imported post data**
+Post Title: Captain Phillips
+Custom field "released": 2013
+Custom taxonomy "Actors": Tom Hanks, Barkhad Abdi, Barkhad Abdirahman
 
 = Why should I quote text cells when I save csv file? =
 
@@ -177,6 +192,8 @@ add_filter( 'really_simple_csv_importer_save_tax', 'really_simple_csv_importer_s
 
 == Changelog ==
 
+= 0.5.3 =
+* Enhancement: Check the post type is already exists.
 = 0.5.2 =
 * New feature: Add Post Thumbnail support
 * Bug fixes
