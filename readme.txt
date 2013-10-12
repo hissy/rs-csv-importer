@@ -3,7 +3,7 @@ Contributors: hissy, wokamoto
 Tags: importer, csv, acf
 Requires at least: 3.0
 Tested up to: 3.6.1
-Stable tag: 0.5.3
+Stable tag: 0.5.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -75,17 +75,17 @@ Yes. Please use ID field.
 
 = Can I import custom field/custom taxonomy of the post? =
 
-Yes. You can use column names same as wp_post table, but if the column name does not match, it creates a custom field (post meta) data. Importing custom taxonomy is a bit more complicated, "tax_$taxonomy" means, "tax_" is prefix, and $taxonomy is name of custom taxonomy (not labels).
+Yes. You can use column names same as wp_post table, but if the column name does not match, it creates a custom field (post meta) data. Importing custom taxonomy is a bit more complicated, "tax_{taxonomy}" means, "tax_" is prefix, and {taxonomy} is name of custom taxonomy (not labels).
 
 Here is a example.
 
-**csv file**
-"post_title","released","tax_actors"
-"Captain Phillips","2013","Tom Hanks, Barkhad Abdi, Barkhad Abdirahman"
+**csv file**  
+"post_title","released","tax_actors"  
+"Captain Phillips","2013","Tom Hanks, Barkhad Abdi, Barkhad Abdirahman"  
 
-**imported post data**
-Post Title: Captain Phillips
-Custom field "released": 2013
+**imported post data**  
+Post Title: Captain Phillips  
+Custom field "released": 2013  
 Custom taxonomy "Actors": Tom Hanks, Barkhad Abdi, Barkhad Abdirahman
 
 = Why should I quote text cells when I save csv file? =
@@ -192,8 +192,9 @@ add_filter( 'really_simple_csv_importer_save_tax', 'really_simple_csv_importer_s
 
 == Changelog ==
 
-= 0.5.3 =
+= 0.5.4 =
 * Enhancement: Check the post type is already exists.
+* Update readme
 = 0.5.2 =
 * New feature: Add Post Thumbnail support
 * Bug fixes
