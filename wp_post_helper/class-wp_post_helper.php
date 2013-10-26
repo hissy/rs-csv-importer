@@ -294,10 +294,18 @@ class wp_post_helper {
 
 	// Add Custom Field
 	public function add_meta($metakey, $val, $unique = true){
-		if (!$this->postid)
+		if (!$this->postid) {
 			$this->metas[$metakey] = array($val, $unique);
-		else
-			return (isset($val) && $val !== false) ? add_post_meta($this->postid, $metakey, $val, $unique) : false;
+		} else {
+			if ((isset($val) && $val !== false)) {
+				if (get_post_meta($this->postid, $metakey, true)) {
+					return update_post_meta($this->postid, $metakey, $val);
+				} else {
+					return add_post_meta($this->postid, $metakey, $val, $unique);
+				}
+			}
+			return false;
+		}
 	}
 
 	// Add Advanced Custom Field
