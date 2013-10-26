@@ -40,7 +40,7 @@ Contains CSV file samples in `/wp-content/plugins/really-simple-csv-importer/sam
 * `post_category`: (string, comma divided) slug of post categories
 * `post_tags`: (string, comma divided) name of post tags
 * `{custom_field}`: (string) Any other column labels used as custom field
-* `tax_{taxonomy}`: (string, comma divided) Any field prefixed with tax_ in the "custom_field" area will be used as a custom taxonomy. Taxonomy must already exist. Entries are names, not slugs
+* `tax_{taxonomy}`: (string, comma divided) Any field prefixed with tax_ in the "custom_field" area will be used as a custom taxonomy. Taxonomy must already exist. Entries are names or slugs of terms.
 
 Note: To set the page template of a page, use custom field key of `_wp_page_template`.  
 Note: If providing a post_status of 'future' you must specify the post_date in order for WordPress to know when to publish your post.
