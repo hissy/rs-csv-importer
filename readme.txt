@@ -3,7 +3,7 @@ Contributors: hissy, wokamoto
 Tags: importer, csv, acf
 Requires at least: 3.0
 Tested up to: 3.6.1
-Stable tag: 0.5.4
+Stable tag: 0.5.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -190,8 +190,15 @@ function really_simple_csv_importer_save_tax_filter( $tax, $post, $is_update ) {
 add_filter( 'really_simple_csv_importer_save_tax', 'really_simple_csv_importer_save_tax_filter', 10, 3 );
 `
 
+== How to debug import post data == 
+
+*Really Simple CSV Importer Debugger add-on* enables you to show more detailed post, meta, taxonomy data of each csv row.  
+Download from [gist](https://gist.github.com/hissy/7175656).
+
 == Changelog ==
 
+= 0.5.5 =
+* Bug fix: Fix to enable to update post meta values.
 = 0.5.4 =
 * Enhancement: Check the post type is already exists.
 * Update readme
