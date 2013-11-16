@@ -53,7 +53,7 @@ How to find advanced custom field key: [Finding the field key](http://www.advanc
 Add star and read future issues about rs-csv-importer on [GitHub](https://github.com/hissy/rs-csv-importer)!
 
 = Thanks =
-Cover banner designed by luchino__
+Cover banner designed by [luchino__](http://uwasora.com/)
 
 == Installation ==
 
