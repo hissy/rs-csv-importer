@@ -52,6 +52,9 @@ How to find advanced custom field key: [Finding the field key](http://www.advanc
 = Official public repository =
 Add star and read future issues about rs-csv-importer on [GitHub](https://github.com/hissy/rs-csv-importer)!
 
+= Thanks =
+Cover banner designed by luchino__
+
 == Installation ==
 
 1. Upload All files to the `/wp-content/plugins/` directory.
