@@ -297,7 +297,7 @@ class wp_post_helper {
 		if (!$this->postid) {
 			$this->metas[$metakey] = array($val, $unique);
 		} else {
-			if ((isset($val) && $val !== false)) {
+			if (!empty($val)) {
 				if (get_post_meta($this->postid, $metakey, true) !== false) {
 					return update_post_meta($this->postid, $metakey, $val);
 				} else {
