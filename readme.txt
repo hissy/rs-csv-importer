@@ -2,8 +2,8 @@
 Contributors: hissy, wokamoto
 Tags: importer, csv, acf
 Requires at least: 3.0
-Tested up to: 3.7
-Stable tag: 0.5.5
+Tested up to: 3.7.1
+Stable tag: 0.5.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -20,7 +20,7 @@ Alternative CSV Importer plugin. Simple and powerful.
 * Custom Taxonomy support
 * Custom Post Type support
 
-Contains CSV file samples in `/wp-content/plugins/really-simple-csv-importer/sample` directory.
+Contains CSV file examples in `/wp-content/plugins/really-simple-csv-importer/sample` directory.
 
 = Available column names and values: =
 * `ID` or `post_id`: (int) post id.  
@@ -42,6 +42,7 @@ Contains CSV file samples in `/wp-content/plugins/really-simple-csv-importer/sam
 * `{custom_field}`: (string) Any other column labels used as custom field
 * `tax_{taxonomy}`: (string, comma divided) Any field prefixed with tax_ in the "custom_field" area will be used as a custom taxonomy. Taxonomy must already exist. Entries are names or slugs of terms.
 
+Note: Empty cells in the csv file means "keep it", not "delete it".  
 Note: To set the page template of a page, use custom field key of `_wp_page_template`.  
 Note: If providing a post_status of 'future' you must specify the post_date in order for WordPress to know when to publish your post.
 
@@ -53,7 +54,7 @@ How to find advanced custom field key: [Finding the field key](http://www.advanc
 Add star and read future issues about rs-csv-importer on [GitHub](https://github.com/hissy/rs-csv-importer)!
 
 = Thanks =
-Cover banner designed by [luchino__](http://uwasora.com/)
+Cover banner designed by @[luchino__](http://uwasora.com/)
 
 == Installation ==
 
@@ -200,6 +201,8 @@ Download from [gist](https://gist.github.com/hissy/7175656).
 
 == Changelog ==
 
+= 0.5.6 =
+* Bug fix: Fails to update empty custom field value.
 = 0.5.5 =
 * Bug fix: Fix to enable to update post meta values.
 = 0.5.4 =
