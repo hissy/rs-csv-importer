@@ -323,7 +323,14 @@ class RS_CSV_Importer extends WP_Importer {
 				 */
 				$tax = apply_filters( 'really_simple_csv_importer_save_tax', $tax, $post, $is_update );
 				
-				if (!$error->get_error_codes()) {
+				/**
+				 * Option for dry run
+				 *
+				 * @param bool false
+				 */
+				$dry_run = apply_filters( 'really_simple_csv_importer_dry_run', false );
+				
+				if (!$error->get_error_codes() && $dry_run == false) {
 					// save post data
 					$result = $this->save_post($post,$meta,$tax,$post_thumbnail,$is_update);
 					if ($result) {
