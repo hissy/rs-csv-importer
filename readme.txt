@@ -3,7 +3,7 @@ Contributors: hissy, wokamoto
 Tags: importer, csv, acf
 Requires at least: 3.0
 Tested up to: 3.7.1
-Stable tag: 0.5.6
+Stable tag: 0.5.7
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -102,6 +102,11 @@ Because PHP cannot read multibyte text cells in some cases.
 
 Yes. Please use `really_simple_csv_importer_save_meta` filter to make array data.
 
+== How to debug import data == 
+
+*Really Simple CSV Importer Debugger add-on* enables you to dry-run-testing and show more detailed post, meta, taxonomy data of each csv row.  
+Download from [gist](https://gist.github.com/hissy/7175656).
+
 == How to customize import post data == 
 
 There are three filters available in the importer.
@@ -194,13 +199,10 @@ function really_simple_csv_importer_save_tax_filter( $tax, $post, $is_update ) {
 add_filter( 'really_simple_csv_importer_save_tax', 'really_simple_csv_importer_save_tax_filter', 10, 3 );
 `
 
-== How to debug import post data == 
-
-*Really Simple CSV Importer Debugger add-on* enables you to show more detailed post, meta, taxonomy data of each csv row.  
-Download from [gist](https://gist.github.com/hissy/7175656).
-
 == Changelog ==
 
+= 0.5.7 =
+* Enhancement: Add dry run filter
 = 0.5.6 =
 * Bug fix: Fails to update empty custom field value.
 = 0.5.5 =
