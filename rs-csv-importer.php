@@ -335,6 +335,7 @@ class RS_CSV_Importer extends WP_Importer {
 					$result = $this->save_post($post,$meta,$tax,$post_thumbnail,$is_update);
 					if ($result) {
 						echo esc_html(sprintf(__('Processing "%s" done.', 'rs-csv-importer'), $post_title));
+						do_action( 'really_simple_csv_importer_after_save_meta', $meta, $post, $result );
 					} else {
 						$error->add( 'save_post', __('An error occurred while saving the post to database.', 'rs-csv-importer') );
 					}
