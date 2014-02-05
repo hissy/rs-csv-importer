@@ -424,27 +424,27 @@ class RS_CSV_Importer extends WP_Importer {
 			$user_login = wp_slash( $user_login );
 		}
 
+		// (string) user password
+		$user_pass = $h->get_data($this,$data,'user_pass');
+		if (!$user_pass) {
+			$error->add( $is_update ? 'update_user' : 'create_user', __('An error occurred while create the user.', 'rs-csv-importer') );
+		}
+
 		// (string) user email
 		$user_email = $h->get_data($this,$data,'user_email');
 
 		// checking e-mail address
 		if ( empty( $user_email ) ) {
 			$errors->add( 'empty_email', __( '<strong>ERROR</strong>: Please enter an e-mail address.' ) );
+			$user_email = '';
 		} elseif ( !is_email( $user_email ) ) {
 			$errors->add( 'invalid_email', __( '<strong>ERROR</strong>: The email address isn&#8217;t correct.' ) );
+			$user_email = '';
 		} elseif ( ( $owner_id = email_exists($user_email) ) && ( !$is_update || ( $owner_id != $user_id ) ) ) {
 			$errors->add( 'email_exists', __('<strong>ERROR</strong>: This email is already registered, please choose another one.') );
-		}
-
-		if ($error->get_error_codes() > 0) {
-			$is_update = true;
+			$user_email = '';
+		} else {
 			$user_email = wp_slash( $user_email );
-		}
-
-		// (string) user password
-		$user_pass = $h->get_data($this,$data,'user_pass');
-		if (!$user_pass) {
-			$error->add( $is_update ? 'update_user' : 'create_user', __('An error occurred while create the user.', 'rs-csv-importer') );
 		}
 
 		// (string) role
@@ -455,9 +455,11 @@ class RS_CSV_Importer extends WP_Importer {
 		}
 
 		// build user data
-		$userdata = compact('user_login', 'user_email', 'user_pass');
+		$userdata = array('user_login' => $user_login, 'user_pass' => $user_pass);
 		if ($user_id)
 			$userdata['ID'] = $user_id;
+		if ($user_email)
+			$userdata['user_email'] = $user_email;
 		if ($role)
 			$userdata['role'] = $role;
 
@@ -468,24 +470,6 @@ class RS_CSV_Importer extends WP_Importer {
 				$userdata[$field] = $value;
 		}
 
-		// create or update user
-		if ( !$is_update )
-			$result = wp_insert_user( $userdata );
-		else
-			$result = wp_update_user( $userdata );
-
-		if (is_wp_error($result))
-			$error = $result;
-		else
-			$user_id = $result;
-
-		// add or update user meta data
-		foreach ($data as $key => $value) {
-			if ($value !== false && isset($this->column_keys[$key])) {
-				update_user_meta( $user_id, $this->column_keys[$key], $value);
-			}
-		}
-
 		/**
 		 * Option for dry run
 		 *
@@ -493,13 +477,25 @@ class RS_CSV_Importer extends WP_Importer {
 		 */
 		$dry_run = apply_filters( 'really_simple_csv_importer_dry_run', false );
 
-		if (!$error->get_error_codes() && $dry_run == false) {
-			// save post data
-			$result = $this->save_post($post,$meta,$tax,$post_thumbnail,$is_update);
-			if ($result) {
-				echo esc_html(sprintf(__('Processing "%s" done.', 'rs-csv-importer'), $post_title));
+		if (!$error->get_error_codes()) {
+			if ( $dry_run == false ) {
+				// create or update user
+				$result = !$is_update ? wp_insert_user( $userdata ) : wp_update_user( $userdata );
+				if ( !is_wp_error($result) ) {
+					// add or update user meta data
+					foreach ($data as $key => $value) {
+						if ($value !== false && isset($this->column_keys[$key])) {
+							update_user_meta( $user_id, $this->column_keys[$key], $value);
+						}
+					}
+					echo esc_html(sprintf(
+						$is_update ? __('User "%s" is updated.', 'rs-csv-importer') : __('User "%s" is created.', 'rs-csv-importer'),
+						$user_login));
+				} else {
+					$error = $result;
+				}
 			} else {
-				$error->add( 'save_post', __('An error occurred while saving the post to database.', 'rs-csv-importer') );
+				var_dump($userdata);
 			}
 		}
 
