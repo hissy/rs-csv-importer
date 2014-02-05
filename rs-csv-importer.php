@@ -374,6 +374,11 @@ class RS_CSV_Importer extends WP_Importer {
 	}
 
 	function process_users($h, $data) {
+		global $wp_roles;
+
+		if ( ! isset( $wp_roles ) )
+			$wp_roles = new WP_Roles();
+
 		$post = array();
 		$is_update = false;
 		$error = new WP_Error();
@@ -421,25 +426,42 @@ class RS_CSV_Importer extends WP_Importer {
 
 		// (string) user email
 		$user_email = $h->get_data($this,$data,'user_email');
-		if ($user_email) {
-			$user_exist = email_exists( $user_email );
-			if ( $user_exist ) {
-				$user_id = $user_exist;
-				$is_update = true;
-			}
+
+		// checking e-mail address
+		if ( empty( $user_email ) ) {
+			$errors->add( 'empty_email', __( '<strong>ERROR</strong>: Please enter an e-mail address.' ) );
+		} elseif ( !is_email( $user_email ) ) {
+			$errors->add( 'invalid_email', __( '<strong>ERROR</strong>: The email address isn&#8217;t correct.' ) );
+		} elseif ( ( $owner_id = email_exists($user_email) ) && ( !$is_update || ( $owner_id != $user_id ) ) ) {
+			$errors->add( 'email_exists', __('<strong>ERROR</strong>: This email is already registered, please choose another one.') );
+		}
+
+		if ($error->get_error_codes() > 0) {
+			$is_update = true;
 			$user_email = wp_slash( $user_email );
 		}
 
 		// (string) user password
 		$user_pass = $h->get_data($this,$data,'user_pass');
 		if (!$user_pass) {
-			$error->add( 'save_post', __('An error occurred while create the user.', 'rs-csv-importer') );
+			$error->add( $is_update ? 'update_user' : 'create_user', __('An error occurred while create the user.', 'rs-csv-importer') );
 		}
 
-		$userdata = compact('user_login', 'user_email', 'user_pass');
-		$userdata['ID'] = $user_id;
+		// (string) role
+		$avail_roles = $wp_roles->get_names();
+		$this_role = $h->get_data($this,$data,'role');
+		if ($this_role && isset($avail_roles[$this_role])) {
+			$role = $this_role;
+		}
 
-		// user data
+		// build user data
+		$userdata = compact('user_login', 'user_email', 'user_pass');
+		if ($user_id)
+			$userdata['ID'] = $user_id;
+		if ($role)
+			$userdata['role'] = $role;
+
+		// added user data
 		foreach( $fields as $field ) {
 			$value = $h->get_data($this,$data,$field);
 			if ($value)
