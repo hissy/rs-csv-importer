@@ -154,17 +154,16 @@ class RS_CSV_Importer extends WP_Importer {
 		while (($data = $h->fgetcsv($handle)) !== FALSE) {
 			if ($is_first) {
 				$h->parse_columns( $this, $data );
-				var_dump($this->column_keys);
 				$is_first = false;
 			} else {
 				echo '<li>';
 
 				switch (true) {
 				case in_array('user_login', $this->column_keys) && in_array('user_email', $this->column_keys) && in_array('user_pass', $this->column_keys):
-					$this->process_users($data);
+					$this->process_users($h, $data);
 					break;
 				default:
-					$this->process_posts($data);
+					$this->process_posts($h, $data);
 				}
 				
 				echo '</li>';
@@ -181,7 +180,7 @@ class RS_CSV_Importer extends WP_Importer {
 	}
 
 	// process parse csv ind insert posts
-	function process_posts($data) {
+	function process_posts($h, $data) {
 		$post = array();
 		$is_update = false;
 		$error = new WP_Error();
@@ -374,7 +373,7 @@ class RS_CSV_Importer extends WP_Importer {
 		}
 	}
 
-	function process_users($data) {
+	function process_users($h, $data) {
 		$post = array();
 		$is_update = false;
 		$error = new WP_Error();
