@@ -482,6 +482,7 @@ class RS_CSV_Importer extends WP_Importer {
 				// create or update user
 				$result = !$is_update ? wp_insert_user( $userdata ) : wp_update_user( $userdata );
 				if ( !is_wp_error($result) ) {
+					$user_id = $result;
 					// add or update user meta data
 					foreach ($data as $key => $value) {
 						if ($value !== false && isset($this->column_keys[$key])) {
