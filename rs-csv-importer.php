@@ -7,7 +7,7 @@ Author: Takuro Hishikawa, wokamoto
 Author URI: https://en.digitalcube.jp/
 Text Domain: rs-csv-importer
 License: GPL version 2 or later - http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
-Version: 0.5.7
+Version: 0.6.0
 */
 
 if ( !defined('WP_LOAD_IMPORTERS') )
@@ -435,13 +435,13 @@ class RS_CSV_Importer extends WP_Importer {
 
 		// checking e-mail address
 		if ( empty( $user_email ) ) {
-			$errors->add( 'empty_email', __( '<strong>ERROR</strong>: Please enter an e-mail address.' ) );
+			$error->add( 'empty_email', __( '<strong>ERROR</strong>: Please enter an e-mail address.' ) );
 			$user_email = '';
 		} elseif ( !is_email( $user_email ) ) {
-			$errors->add( 'invalid_email', __( '<strong>ERROR</strong>: The email address isn&#8217;t correct.' ) );
+			$error->add( 'invalid_email', __( '<strong>ERROR</strong>: The email address isn&#8217;t correct.' ) );
 			$user_email = '';
 		} elseif ( ( $owner_id = email_exists($user_email) ) && ( !$is_update || ( $owner_id != $user_id ) ) ) {
-			$errors->add( 'email_exists', __('<strong>ERROR</strong>: This email is already registered, please choose another one.') );
+			$error->add( 'email_exists', __('<strong>ERROR</strong>: This email is already registered, please choose another one.') );
 			$user_email = '';
 		} else {
 			$user_email = wp_slash( $user_email );
