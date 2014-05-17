@@ -106,6 +106,17 @@ class RS_CSV_Importer extends WP_Importer {
 	function save_post($post,$meta,$terms,$thumbnail,$is_update) {
 		$ph = new wp_post_helper($post);
 		
+		/**
+		 * Action for replace whole step of saving posts
+		 *
+		 * Enables to do add_meta with unique key as false
+		 * Enables to do add_media without applying image as thumbnail
+		 *
+		 * @param array $args
+		 */
+		$args = array( $ph, $post, $meta, $terms, $thumbnail, $is_update );
+		do_action_ref_array( 'really_simple_csv_importer_save_post', $args );
+		
 		foreach ($meta as $key => $value) {
 			$is_acf = 0;
 			if (function_exists('get_field_object')) {
