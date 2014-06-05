@@ -115,7 +115,7 @@ class RS_CSV_Importer extends WP_Importer {
 		 * @param array $args
 		 */
 		$args = array( $ph, $post, $meta, $terms, $thumbnail, $is_update );
-		do_action_ref_array( 'really_simple_csv_importer_save_post', $args );
+		do_action_ref_array( 'really_simple_csv_importer_pre_save_post', $args );
 		
 		foreach ($meta as $key => $value) {
 			$is_acf = 0;
