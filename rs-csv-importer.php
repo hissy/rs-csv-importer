@@ -56,15 +56,17 @@ class RS_CSV_Importer extends WP_Importer {
 	// Step 1
 	function greet() {
 		echo '<p>'.__( 'Choose a CSV (.csv) file to upload, then click Upload file and import.', 'rs-csv-importer' ).'</p>';
-		echo '<p>'.__( 'Maybe Excel-style CSV file is not best for import data. Follow export options below. LibreOffice might be good for you.', 'rs-csv-importer' ).'</p>';
+		echo '<p>'.__( 'Excel-style CSV file is unconventional and not recommended. LibreOffice has enough export options and recommended for most users.', 'rs-csv-importer' ).'</p>';
+		echo '<p>'.__( 'Requirements:', 'rs-csv-importer' ).'</p>';
 		echo '<ol>';
 		echo '<li>'.__( 'Select UTF-8 as charset.', 'rs-csv-importer' ).'</li>';
 		echo '<li>'.sprintf( __( 'You must use field delimiter as "%s"', 'rs-csv-importer'), RS_CSV_Helper::DELIMITER ).'</li>';
 		echo '<li>'.__( 'You must quote all text cells.', 'rs-csv-importer' ).'</li>';
 		echo '</ol>';
-		echo '<p>'.__( 'Sample CSV file download:', 'rs-csv-importer' );
+		echo '<p>'.__( 'Download example CSV files:', 'rs-csv-importer' );
 		echo ' <a href="'.plugin_dir_url( __FILE__ ).'sample/sample.csv">'.__( 'csv', 'rs-csv-importer' ).'</a>,';
-		echo ' <a href="'.plugin_dir_url( __FILE__ ).'sample/sample.ods">'.__( 'ods (OpenDocument Spreadsheet file format)', 'rs-csv-importer' ).'</a>';
+		echo ' <a href="'.plugin_dir_url( __FILE__ ).'sample/sample.ods">'.__( 'ods', 'rs-csv-importer' ).'</a>';
+		echo ' '.__('(OpenDocument Spreadsheet file format for LibreOffice. Please export as csv before import)', 'rs-csv-importer' );
 		echo '</p>';
 		wp_import_upload_form( add_query_arg('step', 1) );
 	}
@@ -180,7 +182,7 @@ class RS_CSV_Importer extends WP_Importer {
 					if (post_type_exists($post_type)) {
 						$post['post_type'] = $post_type;
 					} else {
-						$error->add( 'post_type_exists', sprintf(__('The post type %s is not exists. Please check your csv data.', 'rs-csv-importer'), $post_type) );
+						$error->add( 'post_type_exists', sprintf(__('Invalid post type "%s".', 'rs-csv-importer'), $post_type) );
 					}
 				} else {
 					echo __('Note: Please include post_type value if that is possible.', 'rs-csv-importer').'<br>';
@@ -198,7 +200,7 @@ class RS_CSV_Importer extends WP_Importer {
 							$post['ID'] = $post_id;
 							$is_update = true;
 						} else {
-							$error->add( 'post_type_check', sprintf(__('The post id %d is exists, but post types does not match.', 'rs-csv-importer'), $post_id) );
+							$error->add( 'post_type_check', sprintf(__('The post type value from your csv file does not match the existing data in your database. post_id: %d, post_type(csv): %s, post_type(db): %s', 'rs-csv-importer'), $post_id, $post_type, $post_exist->post_type) );
 						}
 					}
 				}
