@@ -34,6 +34,8 @@ class wp_post_helper {
 
 	private $postid = false;
 	private $attachment_id = array();
+	
+	private $is_insert = true;
 
 	private $tags   = array();	
 	private $medias = array();
@@ -103,6 +105,7 @@ class wp_post_helper {
 				$this->post->ID = $post_id;
 				unset($post['ID']);
 				$this->set($post);
+				$this->is_insert = false;
 			}
 			unset($post);
 		}
@@ -132,21 +135,7 @@ class wp_post_helper {
 
 	// Add Post
 	public function insert(){
-		if (!isset($this->post))
-			return false;
-
-		$this->postid   = 0;
-		$this->post->ID = 0;
-		$postid = wp_insert_post($this->post);
-		if ($postid && !is_wp_error($postid)) {
-			$this->postid   = $postid;
-			$this->post->ID = $postid;
-			return $this->add_related_meta($postid) ? $postid : false;
-		} else {
-			$this->postid   = $postid;
-			$this->post->ID = 0;
-			return false;
-		}
+		return $this->update();
 	}
 
 	// Update Post
@@ -154,10 +143,12 @@ class wp_post_helper {
 		if (!isset($this->post))
 			return false;
 
-		$postid = 
-			$this->postid
-			? wp_update_post($this->post)
-			: wp_insert_post($this->post);
+		if ($this->is_insert) {
+			$postid = wp_insert_post($this->post);
+		} else {
+			$postid = wp_update_post($this->post);
+		}
+		
 		if ($postid && !is_wp_error($postid)) {
 			$this->postid   = $postid;
 			$this->post->ID = $postid;
