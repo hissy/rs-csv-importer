@@ -105,7 +105,7 @@ class RS_CSV_Importer extends WP_Importer {
 	* @param bool $is_update
 	* @return int|false Saved post id. If failed, return false.
 	*/
-	function save_post($post,$meta,$terms,$thumbnail,$is_update) {
+	public static function save_post($post,$meta,$terms,$thumbnail,$is_update) {
 		$ph = new wp_post_helper($post);
 		
 		foreach ($meta as $key => $value) {
@@ -333,8 +333,21 @@ class RS_CSV_Importer extends WP_Importer {
 				$dry_run = apply_filters( 'really_simple_csv_importer_dry_run', false );
 				
 				if (!$error->get_error_codes() && $dry_run == false) {
+					
+					/**
+					 * Get Alternative Importer Class name.
+					 *
+					 * @param string Class name to override Importer class. Default to null (do not override).
+					 */
+					$class = apply_filters( 'really_simple_csv_importer_class', null );
+					
 					// save post data
-					$result = $this->save_post($post,$meta,$tax,$post_thumbnail,$is_update);
+					if ($class && class_exists($class,false)) {
+						$result = $class::save_post($post,$meta,$tax,$post_thumbnail,$is_update);
+					} else {
+						$result = self::save_post($post,$meta,$tax,$post_thumbnail,$is_update);
+					}
+					
 					if ($result) {
 						echo esc_html(sprintf(__('Processing "%s" done.', 'rs-csv-importer'), $post_title));
 					} else {
