@@ -263,7 +263,7 @@ class RS_CSV_Importer extends WP_Importer {
 					$post['menu_order'] = $menu_order;
 				}
 				
-				// (string, comma divided) slug of post categories
+				// (string, comma separated) slug of post categories
 				$post_category = $h->get_data($this,$data,'post_category');
 				if ($post_category) {
 					$categories = preg_split("/,+/", $post_category);
@@ -272,13 +272,10 @@ class RS_CSV_Importer extends WP_Importer {
 					}
 				}
 				
-				// (string, comma divided) name of post tags
+				// (string, comma separated) name of post tags
 				$post_tags = $h->get_data($this,$data,'post_tags');
 				if ($post_tags) {
-					$tags = preg_split("/,+/", $post_tags);
-					if ($tags) {
-						$post['post_tags'] = $tags;
-					}
+					$post['post_tags'] = $post_tags;
 				}
 				
 				// (string) post thumbnail image uri
