@@ -2,25 +2,27 @@
 Contributors: hissy, wokamoto
 Tags: importer, csv, acf
 Requires at least: 3.0
-Tested up to: 3.7.1
-Stable tag: 0.5.7
+Tested up to: 3.9.1
+Stable tag: 0.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Import posts, categories, tags, custom fields from simple csv file.
+Alternative CSV Importer plugin. Simple and powerful, best for geeks.
 
 == Description ==
 
-Alternative CSV Importer plugin. Simple and powerful.
+Alternative CSV Importer plugin. Simple and powerful, best for geeks.
 
 * Category support
 * Tag support
 * Custom field support
-* Advanced Custom Fields support (beta)
+* Custom Field Suite support
+* Advanced Custom Fields support
 * Custom Taxonomy support
 * Custom Post Type support
+* Many useful filter hooks
 
-Contains CSV file examples in `/wp-content/plugins/really-simple-csv-importer/sample` directory.
+You can download CSV file examples in `/wp-content/plugins/really-simple-csv-importer/sample` directory.
 
 = Available column names and values: =
 * `ID` or `post_id`: (int) post id.  
@@ -37,10 +39,11 @@ Contains CSV file examples in `/wp-content/plugins/really-simple-csv-importer/sa
 * `post_type`: ('post' or 'page' or any other post type name) *(required)* The post type slug, not labels.
 * `post_thumbnail`: (string) The uri or path of the post thumbnail.  
   E.g. http://example.com/example.jpg or /path/to/example.jpg
-* `post_category`: (string, comma divided) slug of post categories
-* `post_tags`: (string, comma divided) name of post tags
-* `{custom_field}`: (string) Any other column labels used as custom field
-* `tax_{taxonomy}`: (string, comma divided) Any field prefixed with tax_ in the "custom_field" area will be used as a custom taxonomy. Taxonomy must already exist. Entries are names or slugs of terms.
+* `post_category`: (string, comma separated) slug of post categories
+* `post_tags`: (string, comma separated) name of post tags
+* `tax_{taxonomy}`: (string, comma separated) Any field prefixed with `tax_` will be used as a custom taxonomy. Taxonomy must already exist. Entries are names or slugs of terms.
+* `{custom_field_key}`: (string) Any other column labels used as custom field
+* `cfs_{field_name}`: (string) If you would like to import data to custom fields set by Custom Field Suite, please add prefix `cfs_`
 
 Note: Empty cells in the csv file means "keep it", not "delete it".  
 Note: To set the page template of a page, use custom field key of `_wp_page_template`.  
@@ -98,7 +101,7 @@ Because PHP cannot read multibyte text cells in some cases.
 
 > Locale setting is taken into account by this function. If LANG is e.g. en_US.UTF-8, files in one-byte encoding are read wrong by this function.
 
-= Can I insert multiple value to ACF field like Select or Checkbox? =
+= Can I insert multiple values to CFS or ACF fields like Select or Checkbox? =
 
 Yes. Please use `really_simple_csv_importer_save_meta` filter to make array data.
 
@@ -199,8 +202,18 @@ function really_simple_csv_importer_save_tax_filter( $tax, $post, $is_update ) {
 add_filter( 'really_simple_csv_importer_save_tax', 'really_simple_csv_importer_save_tax_filter', 10, 3 );
 `
 
+= really_simple_csv_importer_class =
+
+This filter provides availability to completely replace the `RS_CSV_Importer::save_post` method.
+
+Example: [gist](https://gist.github.com/hissy/1ea54a46fd07be9f4334)
+
 == Changelog ==
 
+= 0.6 =
+* Enhancement: Custom Field Suite support
+* Enhancement: Add ability to override save_post method
+* Performance Improvements
 = 0.5.7 =
 * Enhancement: Add dry run filter
 = 0.5.6 =
