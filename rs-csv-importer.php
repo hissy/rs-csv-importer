@@ -109,17 +109,24 @@ class RS_CSV_Importer extends WP_Importer {
 		$ph = new wp_post_helper($post);
 		
 		foreach ($meta as $key => $value) {
+			$is_cfs = 0;
 			$is_acf = 0;
-			if (function_exists('get_field_object')) {
-				if (strpos($key, 'field_') === 0) {
-					$fobj = get_field_object($key);
-					if (is_array($fobj) && isset($fobj['key']) && $fobj['key'] == $key) {
-						$ph->add_field($key,$value);
-						$is_acf = 1;
+			$cfs_prefix = 'cfs_';
+			if (strpos($key, $cfs_prefix) === 0) {
+				$ph->add_cfs_field( substr($key, strlen($cfs_prefix)), $value );
+				$is_cfs = 1;
+			} else {
+				if (function_exists('get_field_object')) {
+					if (strpos($key, 'field_') === 0) {
+						$fobj = get_field_object($key);
+						if (is_array($fobj) && isset($fobj['key']) && $fobj['key'] == $key) {
+							$ph->add_field($key,$value);
+							$is_acf = 1;
+						}
 					}
 				}
 			}
-			if (!$is_acf)
+			if (!$is_acf && !$is_cfs)
 				$ph->add_meta($key,$value,true);
 		}
 
