@@ -123,11 +123,7 @@ class wp_post_helper {
 		$this->post = $post;
 
 		if (isset($args['post_tags'])) {
-			$this->add_tags(
-				is_array($args['post_tags'])
-				? $args['post_tags']
-				: explode(',', $args['post_tags'])
-				);
+			$this->add_tags($args['post_tags']);
 		}
 
 		return true;
@@ -209,7 +205,7 @@ class wp_post_helper {
 
 	// Add Tag
 	public function add_tags($tags = array()){
-		$tags = is_array($tags) ? $tags : explode(',', $tags);
+		$tags = is_array($tags) ? $tags : explode( ',', trim( $tags, " \n\t\r\0\x0B," ) );
 		foreach ($tags as $tag) {
 			if (!empty($tag) && !array_search($tag, $this->tags))
 				$this->tags[] = $tag;
@@ -217,9 +213,9 @@ class wp_post_helper {
 		unset($tags);
 
 		if ($this->postid) {
-			$tags = implode(',', $this->tags);
+			$tags = $this->tags;
 			$this->tags = array();
-			return wp_add_post_tags($this->postid, $tags);
+			return wp_set_post_tags($this->postid, $tags, $this->is_insert);
 		}
 	}
 
@@ -233,7 +229,7 @@ class wp_post_helper {
 					$this->terms[$taxonomy][] = $term;
 			}
 		} else {
-			return wp_set_object_terms($this->postid, $terms, $taxonomy);
+			return wp_set_object_terms($this->postid, $terms, $taxonomy, $this->is_insert);
 		}
 	}
 
