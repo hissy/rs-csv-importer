@@ -72,7 +72,7 @@ class wp_post_helper {
 		if (is_numeric($args)) {
 			$post = get_post(intval($args));
 			if ($post && isset($post->ID) && !is_wp_error($post)) {
-				$this->post_id = $post->ID;
+				$this->postid = $post->ID;
 				$this->post = $post;
 				return true;
 			} else {
@@ -99,7 +99,7 @@ class wp_post_helper {
 			$post_id = isset($args['ID']) ? $args['ID'] : $args['post_id'];
 			$post = get_post($post_id, 'ARRAY_A');
 			if (isset($post['ID'])) {
-				$this->post_id  = $post_id;
+				$this->postid  = $post_id;
 				$this->post->ID = $post_id;
 				unset($post['ID']);
 				$this->set($post);
