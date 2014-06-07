@@ -1,0 +1,3 @@
+"post_title","post_id","post_type","post_status","post_tags","normal_field","cfs_date","cfs_color","cfs_boolean","cfs_select","cfs_post","cfs_file","field_5391c98483502"
+"Import test",,"post","publish","Apple, Banana","Doll","2014-06-06","#ff0099","1","A","1,100","101","ACF Test"
+"Update test",1,"post","draft","Cherry",,,,0,"B",,,"ACF update test"
