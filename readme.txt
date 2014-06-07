@@ -3,7 +3,7 @@ Contributors: hissy, wokamoto
 Tags: importer, csv, acf
 Requires at least: 3.0
 Tested up to: 3.9.1
-Stable tag: 0.6
+Stable tag: 0.6.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -210,6 +210,8 @@ Example: [gist](https://gist.github.com/hissy/1ea54a46fd07be9f4334)
 
 == Changelog ==
 
+= 0.6.1 =
+* Bug fix: enables to import "0" value
 = 0.6 =
 * Enhancement: Custom Field Suite support
 * Enhancement: Add ability to override save_post method
