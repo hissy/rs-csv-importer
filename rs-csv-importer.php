@@ -105,7 +105,7 @@ class RS_CSV_Importer extends WP_Importer {
 	* @param bool $is_update
 	* @return int|false Saved post id. If failed, return false.
 	*/
-	public static function save_post($post,$meta,$terms,$thumbnail,$is_update) {
+	public function save_post($post,$meta,$terms,$thumbnail,$is_update) {
 		$ph = new wp_post_helper($post);
 		
 		foreach ($meta as $key => $value) {
@@ -347,9 +347,10 @@ class RS_CSV_Importer extends WP_Importer {
 					
 					// save post data
 					if ($class && class_exists($class,false)) {
-						$result = $class::save_post($post,$meta,$tax,$post_thumbnail,$is_update);
+						$importer = new $class;
+						$result = $importer->save_post($post,$meta,$tax,$post_thumbnail,$is_update);
 					} else {
-						$result = self::save_post($post,$meta,$tax,$post_thumbnail,$is_update);
+						$result = $this->save_post($post,$meta,$tax,$post_thumbnail,$is_update);
 					}
 					
 					if ($result) {
