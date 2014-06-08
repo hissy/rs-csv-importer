@@ -1,6 +1,6 @@
 === Really Simple CSV Importer ===
 Contributors: hissy, wokamoto
-Tags: importer, csv, acf
+Tags: importer, csv, acf, cfs
 Requires at least: 3.0
 Tested up to: 3.9.1
 Stable tag: 0.6.2
@@ -16,8 +16,8 @@ Alternative CSV Importer plugin. Simple and powerful, best for geeks.
 * Category support
 * Tag support
 * Custom field support
-* Custom Field Suite support
-* Advanced Custom Fields support
+* [Custom Field Suite](http://customfieldsuite.com/) support
+* [Advanced Custom Fields](http://www.advancedcustomfields.com/) support
 * Custom Taxonomy support
 * Custom Post Type support
 * Many useful filter hooks
