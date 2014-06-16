@@ -23,7 +23,8 @@ if ( !class_exists( 'WP_Importer' ) ) {
 }
 
 // Load Helpers
-require dirname( __FILE__ ) . '/rs-csv-helper.php';
+require dirname( __FILE__ ) . '/class-rs_csv_helper.php';
+require dirname( __FILE__ ) . '/class-rscsv_import_post_helper.php';
 require dirname( __FILE__ ) . '/wp_post_helper/class-wp_post_helper.php';
 
 /**
