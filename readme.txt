@@ -2,8 +2,8 @@
 Contributors: hissy, wokamoto
 Tags: importer, csv, acf, cfs
 Requires at least: 3.0
-Tested up to: 3.9.1
-Stable tag: 0.6.2
+Tested up to: 4.0.1
+Stable tag: 0.6.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -210,6 +210,8 @@ Example: [gist](https://gist.github.com/hissy/1ea54a46fd07be9f4334)
 
 == Changelog ==
 
+= 0.6.3 =
+* Enhancement: Remove Byte Order Mark automatically (Thanks lucianosantana!)
 = 0.6.2 =
 * Fix error on PHP 5.2
 = 0.6.1 =
@@ -239,7 +241,7 @@ Example: [gist](https://gist.github.com/hissy/1ea54a46fd07be9f4334)
 = 0.4.1 =
 * Version fix
 = 0.4 =
-* New feature: Added custom taxonomy support. Thanks chuckhendo!
+* New feature: Added custom taxonomy support. (Thanks chuckhendo!)
 = 0.3 =
 * New feature: Advanced Custom Fields integrate.
 * Enhancement: Use post_id if not already present when inserting post.

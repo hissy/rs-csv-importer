@@ -7,7 +7,7 @@ Author: Takuro Hishikawa, wokamoto
 Author URI: https://en.digitalcube.jp/
 Text Domain: rs-csv-importer
 License: GPL version 2 or later - http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
-Version: 0.6.2
+Version: 0.6.3
 */
 
 if ( !defined('WP_LOAD_IMPORTERS') )
