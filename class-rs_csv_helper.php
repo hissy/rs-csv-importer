@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * A helper class for get data from CSV files.
+ *
+ * @package Really Simple CSV Importer
+ */
 class RS_CSV_Helper {
 	
 	const DELIMITER = ",";

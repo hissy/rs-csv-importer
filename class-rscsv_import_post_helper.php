@@ -1,7 +1,7 @@
 <?php
 
 /**
- * A helper class to insert or update post data.
+ * A helper class for insert or update post data.
  *
  * @package Really Simple CSV Importer
  */
@@ -13,11 +13,6 @@ class RSCSV_Import_Post_Helper
      * @var $post WP_Post object
      */
     private $post;
-    
-    /**
-     * @var bool $is_insert
-     */
-    public $is_insert = true;
     
     /**
      * @var $error WP_Error object
@@ -90,7 +85,7 @@ class RSCSV_Import_Post_Helper
     }
     
     /**
-     * Get object by post id. turn $is_insert to false
+     * Get object by post id.
      *
      * @param (int) $post_id Post ID
      * @return (RSCSV_Import_Post_Helper)
@@ -99,7 +94,6 @@ class RSCSV_Import_Post_Helper
     {
         $object = new RSCSV_Import_Post_Helper();
         $object->setPost($post_id);
-        $object->is_insert = false;
         return $object;
     }
     
