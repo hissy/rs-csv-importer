@@ -353,9 +353,8 @@ class RSCSV_Import_Post_Helper
             $response = wp_safe_remote_get($url, $args);
             if (!is_wp_error($response) && $response['response']['code'] === 200) {
                 $destination = wp_upload_dir();
-                $destination_path = trailingslashit($destination['path']);
                 $filename = basename($url);
-                $filepath = $destination_path . $filename;
+                $filepath = $destination['path'] . '/' . wp_unique_filename($destination['path'], $filename);
                 
                 $body = wp_remote_retrieve_body($response);
                 
