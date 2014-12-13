@@ -45,7 +45,6 @@ class RS_CSV_Importer extends WP_Importer {
  	// User interface wrapper start
 	function header() {
 		echo '<div class="wrap">';
-		screen_icon();
 		echo '<h2>'.__('Import CSV', 'rs-csv-importer').'</h2>';
 	}
 
