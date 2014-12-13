@@ -1,9 +1,9 @@
 === Really Simple CSV Importer ===
-Contributors: hissy, wokamoto
+Contributors: hissy
 Tags: importer, csv, acf, cfs
-Requires at least: 3.0
-Tested up to: 3.9.1
-Stable tag: 0.6.2
+Requires at least: 3.6
+Tested up to: 4.0.1
+Stable tag: 1.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
