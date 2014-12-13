@@ -25,7 +25,6 @@ if ( !class_exists( 'WP_Importer' ) ) {
 // Load Helpers
 require dirname( __FILE__ ) . '/class-rs_csv_helper.php';
 require dirname( __FILE__ ) . '/class-rscsv_import_post_helper.php';
-require dirname( __FILE__ ) . '/wp_post_helper/class-wp_post_helper.php';
 
 /**
  * CSV Importer
@@ -103,47 +102,41 @@ class RS_CSV_Importer extends WP_Importer {
 	* @param array $terms
 	* @param string $thumbnail The uri or path of thumbnail image.
 	* @param bool $is_update
-	* @return int|false Saved post id. If failed, return false.
+	* @return RSCSV_Import_Post_Helper
 	*/
 	public function save_post($post,$meta,$terms,$thumbnail,$is_update) {
-		$ph = new wp_post_helper($post);
+    	
+    	// Separate the post tags from $post array
+    	if (isset($post['post_tags']) && !empty($post['post_tags'])) {
+	    	$post_tags = $post['post_tags'];
+	    	unset($post['post_tags']);
+    	}
+    	
+    	// Add or update the post
+    	if ($is_update) {
+	    	$h = RSCSV_Import_Post_Helper::getByID($post['ID']);
+	    	$h->update($post);
+    	} else {
+	    	$h = RSCSV_Import_Post_Helper::add($post);
+    	}
+    	
+    	// Set post tags
+    	$h->setPostTags($post_tags);
+    	
+    	// Set meta data
+    	$h->setMeta($meta);
 		
-		foreach ($meta as $key => $value) {
-			$is_cfs = 0;
-			$is_acf = 0;
-			$cfs_prefix = 'cfs_';
-			if (strpos($key, $cfs_prefix) === 0) {
-				$ph->add_cfs_field( substr($key, strlen($cfs_prefix)), $value );
-				$is_cfs = 1;
-			} else {
-				if (function_exists('get_field_object')) {
-					if (strpos($key, 'field_') === 0) {
-						$fobj = get_field_object($key);
-						if (is_array($fobj) && isset($fobj['key']) && $fobj['key'] == $key) {
-							$ph->add_field($key,$value);
-							$is_acf = 1;
-						}
-					}
-				}
-			}
-			if (!$is_acf && !$is_cfs)
-				$ph->add_meta($key,$value,true);
-		}
-
+		// Set terms
 		foreach ($terms as $key => $value) {
-			$ph->add_terms($key, $value);
+			$h->setObjectTerms($key, $value);
 		}
 		
-		if ($thumbnail) $ph->add_media($thumbnail,'','','',true);
+		// Add thumbnail
+		if ($thumbnail) {
+			$h->addThumbnail($thumbnail);
+		}
 		
-		if ($is_update)
-			$result = $ph->update();
-		else
-			$result = $ph->insert();
-		
-		unset($ph);
-		
-		return $result;
+		return $h;
 	}
 
 	// process parse csv ind insert posts
@@ -280,8 +273,6 @@ class RS_CSV_Importer extends WP_Importer {
 				
 				// (string) post thumbnail image uri
 				$post_thumbnail = $h->get_data($this,$data,'post_thumbnail');
-				if (parse_url($post_thumbnail, PHP_URL_SCHEME))
-					$post_thumbnail = remote_get_file($post_thumbnail);
 				
 				$meta = array();
 				$tax = array();
@@ -353,10 +344,10 @@ class RS_CSV_Importer extends WP_Importer {
 						$result = $this->save_post($post,$meta,$tax,$post_thumbnail,$is_update);
 					}
 					
-					if ($result) {
-						echo esc_html(sprintf(__('Processing "%s" done.', 'rs-csv-importer'), $post_title));
+					if ($result->isError()) {
+						$error = $result->getError();
 					} else {
-						$error->add( 'save_post', __('An error occurred while saving the post to database.', 'rs-csv-importer') );
+						echo esc_html(sprintf(__('Processing "%s" done.', 'rs-csv-importer'), $post_title));
 					}
 				}
 				
