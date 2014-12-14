@@ -321,7 +321,9 @@ class RS_CSV_Importer extends WP_Importer {
 				$tax = apply_filters( 'really_simple_csv_importer_save_tax', $tax, $post, $is_update );
 				
 				/**
-				 * Option for dry run
+				 * Option for dry run testing
+				 *
+				 * @since 0.5.7
 				 *
 				 * @param bool false
 				 */
@@ -331,6 +333,8 @@ class RS_CSV_Importer extends WP_Importer {
 					
 					/**
 					 * Get Alternative Importer Class name.
+					 *
+					 * @since 0.6
 					 *
 					 * @param string Class name to override Importer class. Default to null (do not override).
 					 */
@@ -347,6 +351,19 @@ class RS_CSV_Importer extends WP_Importer {
 					if ($result->isError()) {
 						$error = $result->getError();
 					} else {
+						$post_object = $result->getPost();
+						
+						if (is_object($post_object)) {
+							/**
+							 * Fires adter the post imported.
+							 *
+							 * @since 1.0
+							 *
+							 * @param WP_Post $post_object
+							 */
+							do_action( 'really_simple_csv_importer_post_saved', $post_object );
+						}
+						
 						echo esc_html(sprintf(__('Processing "%s" done.', 'rs-csv-importer'), $post_title));
 					}
 				}
