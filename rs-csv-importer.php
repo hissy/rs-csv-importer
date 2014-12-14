@@ -105,26 +105,26 @@ class RS_CSV_Importer extends WP_Importer {
 	* @return RSCSV_Import_Post_Helper
 	*/
 	public function save_post($post,$meta,$terms,$thumbnail,$is_update) {
-    	
-    	// Separate the post tags from $post array
-    	if (isset($post['post_tags']) && !empty($post['post_tags'])) {
-	    	$post_tags = $post['post_tags'];
-	    	unset($post['post_tags']);
-    	}
-    	
-    	// Add or update the post
-    	if ($is_update) {
-	    	$h = RSCSV_Import_Post_Helper::getByID($post['ID']);
-	    	$h->update($post);
-    	} else {
-	    	$h = RSCSV_Import_Post_Helper::add($post);
-    	}
-    	
-    	// Set post tags
-    	$h->setPostTags($post_tags);
-    	
-    	// Set meta data
-    	$h->setMeta($meta);
+		
+		// Separate the post tags from $post array
+		if (isset($post['post_tags']) && !empty($post['post_tags'])) {
+			$post_tags = $post['post_tags'];
+			unset($post['post_tags']);
+		}
+		
+		// Add or update the post
+		if ($is_update) {
+			$h = RSCSV_Import_Post_Helper::getByID($post['ID']);
+			$h->update($post);
+		} else {
+			$h = RSCSV_Import_Post_Helper::add($post);
+		}
+		
+		// Set post tags
+		$h->setPostTags($post_tags);
+		
+		// Set meta data
+		$h->setMeta($meta);
 		
 		// Set terms
 		foreach ($terms as $key => $value) {

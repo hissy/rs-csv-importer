@@ -28,7 +28,7 @@ class RS_CSV_Helper {
 
 		$bom = pack("CCC", 0xef, 0xbb, 0xbf);
 		if (0 == strncmp($array[0], $bom, 3)) {
-		    $array[0] = substr($array[0], 3);
+			$array[0] = substr($array[0], 3);
 		}
 
 		$keys = array_keys($array);
