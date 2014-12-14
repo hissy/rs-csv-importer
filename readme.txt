@@ -20,9 +20,11 @@ Alternative CSV Importer plugin. Simple and powerful, best for geeks.
 * [Advanced Custom Fields](http://www.advancedcustomfields.com/) support
 * Custom Taxonomy support
 * Custom Post Type support
-* Many useful filter hooks
+* Filter hook for dry-run-testing
+* Filter hooks for customize csv data before importing to database
+* Action hook for update post data after importing to database
 
-You can download CSV file examples in `/wp-content/plugins/really-simple-csv-importer/sample` directory.
+You can get example CSV files in `/wp-content/plugins/really-simple-csv-importer/sample` directory.
 
 = Available column names and values: =
 * `ID` or `post_id`: (int) post id.  
@@ -70,15 +72,15 @@ Cover banner designed by @[luchino__](http://uwasora.com/)
 
 = Should I fill all columns of post data? =
 
-No. Only columns you need.
+No. Only columns which you want to update.
 
 = Can I update existing post data? =
 
-Yes. Please use ID field.
+Yes. Please use ID field to specify the existing post.
 
 = Can I insert post with specific post id? =
 
-Yes. Please use ID field.
+Yes. Please use ID field to specify the new post ID.
 
 = Can I import custom field/custom taxonomy of the post? =
 
@@ -202,6 +204,16 @@ function really_simple_csv_importer_save_tax_filter( $tax, $post, $is_update ) {
 add_filter( 'really_simple_csv_importer_save_tax', 'really_simple_csv_importer_save_tax_filter', 10, 3 );
 `
 
+== How to customize the post data after importing to database ==
+
+= really_simple_csv_importer_post_saved =
+
+This action provides availability to run some tasks after importing.
+
+Example: [gist](https://gist.github.com/hissy/fe0aa2582b78394a3a82)
+
+== How to customize the importing process entirely == 
+
 = really_simple_csv_importer_class =
 
 This filter provides availability to completely replace the `RS_CSV_Importer::save_post` method.
@@ -210,6 +222,10 @@ Example: [gist](https://gist.github.com/hissy/1ea54a46fd07be9f4334)
 
 == Changelog ==
 
+= 1.0 =
+* Enhancement: Replace a helper class to more better one
+* Enhancement: Add action hook
+* Bug fixes
 = 0.6.3 =
 * Enhancement: Remove Byte Order Mark automatically (Thanks lucianosantana!)
 = 0.6.2 =
@@ -252,3 +268,8 @@ Example: [gist](https://gist.github.com/hissy/1ea54a46fd07be9f4334)
 * Bug fix
 = 0.1 =
 * First Release (beta)
+
+== Upgrade Notice ==
+
+= 1.0 =
+* wp_post_helper class is deprecated.
