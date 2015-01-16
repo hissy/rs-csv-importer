@@ -121,7 +121,9 @@ class RS_CSV_Importer extends WP_Importer {
 		}
 		
 		// Set post tags
-		$h->setPostTags($post_tags);
+		if ($post_tags) {
+			$h->setPostTags($post_tags);
+		}
 		
 		// Set meta data
 		$h->setMeta($meta);
