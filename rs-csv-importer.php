@@ -119,7 +119,7 @@ class RS_CSV_Importer extends WP_Importer {
 		}
 		
 		// Set post tags
-		if ($post_tags) {
+		if (isset($post_tags)) {
 			$h->setPostTags($post_tags);
 		}
 		
