@@ -3,11 +3,11 @@
 Plugin Name: Really Simple CSV Importer
 Plugin URI: http://wordpress.org/plugins/really-simple-csv-importer/
 Description: Import posts, categories, tags, custom fields from simple csv file.
-Author: Takuro Hishikawa, wokamoto
+Author: Takuro Hishikawa
 Author URI: https://en.digitalcube.jp/
-Text Domain: rs-csv-importer
+Text Domain: really-simple-csv-importer
 License: GPL version 2 or later - http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
-Version: 1.0
+Version: 1.1
 */
 
 if ( !defined('WP_LOAD_IMPORTERS') )
@@ -44,7 +44,7 @@ class RS_CSV_Importer extends WP_Importer {
  	// User interface wrapper start
 	function header() {
 		echo '<div class="wrap">';
-		echo '<h2>'.__('Import CSV', 'rs-csv-importer').'</h2>';
+		echo '<h2>'.__('Import CSV', 'really-simple-csv-importer').'</h2>';
 	}
 
 	// User interface wrapper end
@@ -54,18 +54,18 @@ class RS_CSV_Importer extends WP_Importer {
 	
 	// Step 1
 	function greet() {
-		echo '<p>'.__( 'Choose a CSV (.csv) file to upload, then click Upload file and import.', 'rs-csv-importer' ).'</p>';
-		echo '<p>'.__( 'Excel-style CSV file is unconventional and not recommended. LibreOffice has enough export options and recommended for most users.', 'rs-csv-importer' ).'</p>';
-		echo '<p>'.__( 'Requirements:', 'rs-csv-importer' ).'</p>';
+		echo '<p>'.__( 'Choose a CSV (.csv) file to upload, then click Upload file and import.', 'really-simple-csv-importer' ).'</p>';
+		echo '<p>'.__( 'Excel-style CSV file is unconventional and not recommended. LibreOffice has enough export options and recommended for most users.', 'really-simple-csv-importer' ).'</p>';
+		echo '<p>'.__( 'Requirements:', 'really-simple-csv-importer' ).'</p>';
 		echo '<ol>';
-		echo '<li>'.__( 'Select UTF-8 as charset.', 'rs-csv-importer' ).'</li>';
-		echo '<li>'.sprintf( __( 'You must use field delimiter as "%s"', 'rs-csv-importer'), RS_CSV_Helper::DELIMITER ).'</li>';
-		echo '<li>'.__( 'You must quote all text cells.', 'rs-csv-importer' ).'</li>';
+		echo '<li>'.__( 'Select UTF-8 as charset.', 'really-simple-csv-importer' ).'</li>';
+		echo '<li>'.sprintf( __( 'You must use field delimiter as "%s"', 'really-simple-csv-importer'), RS_CSV_Helper::DELIMITER ).'</li>';
+		echo '<li>'.__( 'You must quote all text cells.', 'really-simple-csv-importer' ).'</li>';
 		echo '</ol>';
-		echo '<p>'.__( 'Download example CSV files:', 'rs-csv-importer' );
-		echo ' <a href="'.plugin_dir_url( __FILE__ ).'sample/sample.csv">'.__( 'csv', 'rs-csv-importer' ).'</a>,';
-		echo ' <a href="'.plugin_dir_url( __FILE__ ).'sample/sample.ods">'.__( 'ods', 'rs-csv-importer' ).'</a>';
-		echo ' '.__('(OpenDocument Spreadsheet file format for LibreOffice. Please export as csv before import)', 'rs-csv-importer' );
+		echo '<p>'.__( 'Download example CSV files:', 'really-simple-csv-importer' );
+		echo ' <a href="'.plugin_dir_url( __FILE__ ).'sample/sample.csv">'.__( 'csv', 'really-simple-csv-importer' ).'</a>,';
+		echo ' <a href="'.plugin_dir_url( __FILE__ ).'sample/sample.ods">'.__( 'ods', 'really-simple-csv-importer' ).'</a>';
+		echo ' '.__('(OpenDocument Spreadsheet file format for LibreOffice. Please export as csv before import)', 'really-simple-csv-importer' );
 		echo '</p>';
 		wp_import_upload_form( add_query_arg('step', 1) );
 	}
@@ -75,12 +75,12 @@ class RS_CSV_Importer extends WP_Importer {
 		$file = wp_import_handle_upload();
 
 		if ( isset( $file['error'] ) ) {
-			echo '<p><strong>' . __( 'Sorry, there has been an error.', 'rs-csv-importer' ) . '</strong><br />';
+			echo '<p><strong>' . __( 'Sorry, there has been an error.', 'really-simple-csv-importer' ) . '</strong><br />';
 			echo esc_html( $file['error'] ) . '</p>';
 			return false;
 		} else if ( ! file_exists( $file['file'] ) ) {
-			echo '<p><strong>' . __( 'Sorry, there has been an error.', 'rs-csv-importer' ) . '</strong><br />';
-			printf( __( 'The export file could not be found at <code>%s</code>. It is likely that this was caused by a permissions problem.', 'rs-csv-importer' ), esc_html( $file['file'] ) );
+			echo '<p><strong>' . __( 'Sorry, there has been an error.', 'really-simple-csv-importer' ) . '</strong><br />';
+			printf( __( 'The export file could not be found at <code>%s</code>. It is likely that this was caused by a permissions problem.', 'really-simple-csv-importer' ), esc_html( $file['file'] ) );
 			echo '</p>';
 			return false;
 		}
@@ -145,7 +145,7 @@ class RS_CSV_Importer extends WP_Importer {
 
 		$handle = $h->fopen($this->file, 'r');
 		if ( $handle == false ) {
-			echo '<p><strong>'.__( 'Failed to open file.', 'rs-csv-importer' ).'</strong></p>';
+			echo '<p><strong>'.__( 'Failed to open file.', 'really-simple-csv-importer' ).'</strong></p>';
 			wp_import_cleanup($this->id);
 			return false;
 		}
@@ -171,10 +171,10 @@ class RS_CSV_Importer extends WP_Importer {
 					if (post_type_exists($post_type)) {
 						$post['post_type'] = $post_type;
 					} else {
-						$error->add( 'post_type_exists', sprintf(__('Invalid post type "%s".', 'rs-csv-importer'), $post_type) );
+						$error->add( 'post_type_exists', sprintf(__('Invalid post type "%s".', 'really-simple-csv-importer'), $post_type) );
 					}
 				} else {
-					echo __('Note: Please include post_type value if that is possible.', 'rs-csv-importer').'<br>';
+					echo __('Note: Please include post_type value if that is possible.', 'really-simple-csv-importer').'<br>';
 				}
 				
 				// (int) post id
@@ -189,7 +189,7 @@ class RS_CSV_Importer extends WP_Importer {
 							$post['ID'] = $post_id;
 							$is_update = true;
 						} else {
-							$error->add( 'post_type_check', sprintf(__('The post type value from your csv file does not match the existing data in your database. post_id: %d, post_type(csv): %s, post_type(db): %s', 'rs-csv-importer'), $post_id, $post_type, $post_exist->post_type) );
+							$error->add( 'post_type_check', sprintf(__('The post type value from your csv file does not match the existing data in your database. post_id: %d, post_type(csv): %s, post_type(db): %s', 'really-simple-csv-importer'), $post_id, $post_type, $post_exist->post_type) );
 						}
 					}
 				}
@@ -364,7 +364,7 @@ class RS_CSV_Importer extends WP_Importer {
 							do_action( 'really_simple_csv_importer_post_saved', $post_object );
 						}
 						
-						echo esc_html(sprintf(__('Processing "%s" done.', 'rs-csv-importer'), $post_title));
+						echo esc_html(sprintf(__('Processing "%s" done.', 'really-simple-csv-importer'), $post_title));
 					}
 				}
 				
@@ -383,7 +383,7 @@ class RS_CSV_Importer extends WP_Importer {
 		
 		wp_import_cleanup($this->id);
 		
-		echo '<h3>'.__('All Done.', 'rs-csv-importer').'</h3>';
+		echo '<h3>'.__('All Done.', 'really-simple-csv-importer').'</h3>';
 	}
 
 	// dispatcher
@@ -413,9 +413,13 @@ class RS_CSV_Importer extends WP_Importer {
 	
 }
 
-// setup importer
-$rs_csv_importer = new RS_CSV_Importer();
-
-register_importer('csv', __('CSV', 'rs-csv-importer'), __('Import posts, categories, tags, custom fields from simple csv file.', 'rs-csv-importer'), array ($rs_csv_importer, 'dispatch'));
+// Initialize
+function really_simple_csv_importer() {
+	load_plugin_textdomain( 'really-simple-csv-importer', false, dirname( plugin_basename(__FILE__) ) . '/languages' );
+	
+    $rs_csv_importer = new RS_CSV_Importer();
+    register_importer('csv', __('CSV', 'really-simple-csv-importer'), __('Import posts, categories, tags, custom fields from simple csv file.', 'really-simple-csv-importer'), array ($rs_csv_importer, 'dispatch'));
+}
+add_action( 'plugins_loaded', 'really_simple_csv_importer' );
 
 } // class_exists( 'WP_Importer' )

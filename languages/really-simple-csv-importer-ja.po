@@ -1,0 +1,137 @@
+# Copyright (C) 2015 
+# This file is distributed under the same license as the  package.
+msgid ""
+msgstr ""
+"Project-Id-Version: Really Simple CSV Importer 1.0.1\n"
+"Report-Msgid-Bugs-To: http://wordpress.org/tag/really-simple-csv-importer\n"
+"POT-Creation-Date: 2015-02-01 05:07:15+00:00\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"PO-Revision-Date: 2015-02-01 14:16+0900\n"
+"Last-Translator: Takuro Hishikawa <hishikawa@concrete5.co.jp>\n"
+"Language-Team: \n"
+"Language: ja\n"
+"X-Generator: Poedit 1.7.3\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+
+#: class-rscsv_import_post_helper.php:73
+msgid "Provided Post ID not found."
+msgstr "指定された投稿IDが見つかりません。"
+
+#: class-rscsv_import_post_helper.php:179
+#: class-rscsv_import_post_helper.php:199
+#: class-rscsv_import_post_helper.php:220
+#: class-rscsv_import_post_helper.php:235
+#: class-rscsv_import_post_helper.php:251
+msgid "WP_Post object is not set."
+msgstr "WP_Postオブジェクトがセットされていません。"
+
+#: class-rscsv_import_post_helper.php:364
+msgid "Could not get remote file."
+msgstr "リモートファイルを取得できませんでした。"
+
+#: rs-csv-importer.php:47
+msgid "Import CSV"
+msgstr "CSVをインポート"
+
+#: rs-csv-importer.php:57
+msgid "Choose a CSV (.csv) file to upload, then click Upload file and import."
+msgstr ""
+"アップロードするCSV (.csv) ファイルを選択し、「ファイルをアップロードしてイ"
+"ンポート」をクリックしてください。"
+
+#: rs-csv-importer.php:58
+msgid ""
+"Excel-style CSV file is unconventional and not recommended. LibreOffice has "
+"enough export options and recommended for most users."
+msgstr ""
+"エクセル形式のCSVファイルとは互換性がなく、推奨しません。LibreOfficeはほとん"
+"どのユーザーに最適な出力オプションを提供します。"
+
+#: rs-csv-importer.php:59
+msgid "Requirements:"
+msgstr "必須:"
+
+#: rs-csv-importer.php:61
+msgid "Select UTF-8 as charset."
+msgstr "文字セットにUTF-8を選択してください。"
+
+#: rs-csv-importer.php:62
+msgid "You must use field delimiter as \"%s\""
+msgstr "フィールド区切りに \"%s\" を使用してください。"
+
+#: rs-csv-importer.php:63
+msgid "You must quote all text cells."
+msgstr "全てのテキストセルを引用符で囲ってください。"
+
+#: rs-csv-importer.php:65
+msgid "Download example CSV files:"
+msgstr "サンプルCSVファイルをダウンロード:"
+
+#: rs-csv-importer.php:66
+msgid "csv"
+msgstr "csv"
+
+#: rs-csv-importer.php:67
+msgid "ods"
+msgstr "ods"
+
+#: rs-csv-importer.php:68
+msgid ""
+"(OpenDocument Spreadsheet file format for LibreOffice. Please export as csv "
+"before import)"
+msgstr ""
+"（LibreOffice用のオープンドキュメントスプレッドシートファイル形式です。イン"
+"ポートする前にcsvとして出力してください）"
+
+#: rs-csv-importer.php:78 rs-csv-importer.php:82
+msgid "Sorry, there has been an error."
+msgstr "﻿エラーが発生しました。"
+
+#: rs-csv-importer.php:83
+msgid ""
+"The export file could not be found at <code>%s</code>. It is likely that "
+"this was caused by a permissions problem."
+msgstr ""
+"﻿エクスポートファイルが<code>%s</code>に見つかりません。これは、パーミッショ"
+"ンの問題である可能性が高いです。"
+
+#: rs-csv-importer.php:148
+msgid "Failed to open file."
+msgstr "ファイルを開けませんでした。"
+
+#: rs-csv-importer.php:174
+msgid "Invalid post type \"%s\"."
+msgstr "\"%s\" は不正な投稿タイプです。"
+
+#: rs-csv-importer.php:177
+msgid "Note: Please include post_type value if that is possible."
+msgstr "﻿注: 可能な場合 post_type 値を記載してください。"
+
+#: rs-csv-importer.php:192
+msgid ""
+"The post type value from your csv file does not match the existing data in "
+"your database. post_id: %d, post_type(csv): %s, post_type(db): %s"
+msgstr ""
+"CSVファイルからの投稿タイプ値は、データベース内の既存のデータと一致しませ"
+"ん。post_id: %d、post_type(csv): %s、post_type(db): %s"
+
+#: rs-csv-importer.php:367
+msgid "Processing \"%s\" done."
+msgstr "\"%s\" の処理が完了しました。"
+
+#: rs-csv-importer.php:386
+msgid "All Done."
+msgstr "すべて完了しました。"
+
+#: rs-csv-importer.php:419
+msgid "CSV"
+msgstr "CSV"
+
+#: rs-csv-importer.php:419
+msgid "Import posts, categories, tags, custom fields from simple csv file."
+msgstr ""
+"投稿、カテゴリー、タグ、カスタムフィールドをシンプルなcsvファイルからイン"
+"ポートします。"

@@ -1,0 +1,121 @@
+# Copyright (C) 2015 
+# This file is distributed under the same license as the  package.
+msgid ""
+msgstr ""
+"Project-Id-Version:  \n"
+"Report-Msgid-Bugs-To: http://wordpress.org/tag/really-simple-csv-importer\n"
+"POT-Creation-Date: 2015-02-01 05:07:15+00:00\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"PO-Revision-Date: 2015-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+
+#: class-rscsv_import_post_helper.php:73
+msgid "Provided Post ID not found."
+msgstr ""
+
+#: class-rscsv_import_post_helper.php:179
+#: class-rscsv_import_post_helper.php:199
+#: class-rscsv_import_post_helper.php:220
+#: class-rscsv_import_post_helper.php:235
+#: class-rscsv_import_post_helper.php:251
+msgid "WP_Post object is not set."
+msgstr ""
+
+#: class-rscsv_import_post_helper.php:364
+msgid "Could not get remote file."
+msgstr ""
+
+#: rs-csv-importer.php:47
+msgid "Import CSV"
+msgstr ""
+
+#: rs-csv-importer.php:57
+msgid "Choose a CSV (.csv) file to upload, then click Upload file and import."
+msgstr ""
+
+#: rs-csv-importer.php:58
+msgid ""
+"Excel-style CSV file is unconventional and not recommended. LibreOffice has "
+"enough export options and recommended for most users."
+msgstr ""
+
+#: rs-csv-importer.php:59
+msgid "Requirements:"
+msgstr ""
+
+#: rs-csv-importer.php:61
+msgid "Select UTF-8 as charset."
+msgstr ""
+
+#: rs-csv-importer.php:62
+msgid "You must use field delimiter as \"%s\""
+msgstr ""
+
+#: rs-csv-importer.php:63
+msgid "You must quote all text cells."
+msgstr ""
+
+#: rs-csv-importer.php:65
+msgid "Download example CSV files:"
+msgstr ""
+
+#: rs-csv-importer.php:66
+msgid "csv"
+msgstr ""
+
+#: rs-csv-importer.php:67
+msgid "ods"
+msgstr ""
+
+#: rs-csv-importer.php:68
+msgid ""
+"(OpenDocument Spreadsheet file format for LibreOffice. Please export as csv "
+"before import)"
+msgstr ""
+
+#: rs-csv-importer.php:78 rs-csv-importer.php:82
+msgid "Sorry, there has been an error."
+msgstr ""
+
+#: rs-csv-importer.php:83
+msgid ""
+"The export file could not be found at <code>%s</code>. It is likely that "
+"this was caused by a permissions problem."
+msgstr ""
+
+#: rs-csv-importer.php:148
+msgid "Failed to open file."
+msgstr ""
+
+#: rs-csv-importer.php:174
+msgid "Invalid post type \"%s\"."
+msgstr ""
+
+#: rs-csv-importer.php:177
+msgid "Note: Please include post_type value if that is possible."
+msgstr ""
+
+#: rs-csv-importer.php:192
+msgid ""
+"The post type value from your csv file does not match the existing data in "
+"your database. post_id: %d, post_type(csv): %s, post_type(db): %s"
+msgstr ""
+
+#: rs-csv-importer.php:367
+msgid "Processing \"%s\" done."
+msgstr ""
+
+#: rs-csv-importer.php:386
+msgid "All Done."
+msgstr ""
+
+#: rs-csv-importer.php:419
+msgid "CSV"
+msgstr ""
+
+#: rs-csv-importer.php:419
+msgid "Import posts, categories, tags, custom fields from simple csv file."
+msgstr ""
