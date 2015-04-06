@@ -213,7 +213,7 @@ add_filter( 'really_simple_csv_importer_save_tax', 'really_simple_csv_importer_s
 
 This action provides availability to run some tasks after importing.
 
-Example: [gist](https://gist.github.com/hissy/fe0aa2582b78394a3a82)
+Example: Download image from remote url to custom field (Download from [gist](https://gist.github.com/hissy/0973a6a9977129a6ebd0))
 
 == How to customize the importing process entirely == 
 
@@ -221,7 +221,7 @@ Example: [gist](https://gist.github.com/hissy/fe0aa2582b78394a3a82)
 
 This filter provides availability to completely replace the `RS_CSV_Importer#save_post` method.
 
-Example: [gist](https://gist.github.com/hissy/199ad9be855ec9be1e54)
+Example: Update row based on a custom field ID/key match (Download from [gist](https://gist.github.com/hissy/199ad9be855ec9be1e54))
 
 == Changelog ==
 
