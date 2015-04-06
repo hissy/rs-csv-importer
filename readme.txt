@@ -87,7 +87,7 @@ Yes. Please use ID field to specify the new post ID.
 
 Yes. You can use column names same as wp_post table, but if the column name does not match, it creates a custom field (post meta) data. Importing custom taxonomy is a bit more complicated, "tax_{taxonomy}" means, "tax_" is prefix, and {taxonomy} is name of custom taxonomy (not labels).
 
-Here is a example.
+Here is an example.
 
 **csv file**  
 "post_title","released","tax_actors"  
