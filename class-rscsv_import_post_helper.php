@@ -8,6 +8,7 @@
 class RSCSV_Import_Post_Helper
 {
     const CFS_PREFIX = 'cfs_';
+    const SCF_PREFIX = 'scf_';
     
     /**
      * @var $post WP_Post object
@@ -141,12 +142,18 @@ class RSCSV_Import_Post_Helper
      */
     public function setMeta($data)
     {
+        $scf_array = array();
         foreach ($data as $key => $value) {
             $is_cfs = 0;
+            $is_scf = 0;
             $is_acf = 0;
             if (strpos($key, self::CFS_PREFIX) === 0) {
                 $this->cfsSave(substr($key, strlen(self::CFS_PREFIX)), $value);
                 $is_cfs = 1;
+            } elseif(strpos($key, self::SCF_PREFIX) === 0) {
+                $scf_key = substr($key, strlen(self::SCF_PREFIX));
+                $scf_array[$scf_key][] = $value;
+                $is_scf = 1;
             } else {
                 if (function_exists('get_field_object')) {
                     if (strpos($key, 'field_') === 0) {
@@ -158,10 +165,11 @@ class RSCSV_Import_Post_Helper
                     }
                 }
             }
-            if (!$is_acf && !$is_cfs) {
+            if (!$is_acf && !$is_cfs && !$is_scf) {
                 $this->updateMeta($key, $value);
             }
         }
+        $this->scfSave($scf_array);
     }
     
     /**
@@ -203,7 +211,8 @@ class RSCSV_Import_Post_Helper
     /**
      * A wrapper of CFS()->save()
      *
-     * @param (array) $data
+     * @param (string) $key
+     * @param (string/array) $value
      */
     protected function cfsSave($key, $value)
     {
@@ -215,6 +224,32 @@ class RSCSV_Import_Post_Helper
                 CFS()->save($field_data, $post_data);
             } else {
                 $this->updateMeta($key, $value);
+            }
+        } else {
+            $this->addError('post_is_not_set', __('WP_Post object is not set.', 'really-simple-csv-importer'));
+        }
+    }
+    
+    /**
+     * A wrapper of Smart_Custom_Fields_Meta()->save()
+     *
+     * @param (array) $data
+     */
+    protected function scfSave($data)
+    {
+        $post = $this->getPost();
+        if ($post instanceof WP_Post) {
+            if (class_exists('Smart_Custom_Fields_Meta') && is_array($data)) {
+                $_data = array();
+                $_data['smart-custom-fields'] = $data;
+                $meta = new Smart_Custom_Fields_Meta($post);
+                $meta->save($_data);
+            } elseif(is_array($data)) {
+                foreach ($data as $key => $array) {
+                    foreach ((array) $array as $value) {
+                        $this->updateMeta($key, $value);
+                    }
+                }
             }
         } else {
             $this->addError('post_is_not_set', __('WP_Post object is not set.', 'really-simple-csv-importer'));
