@@ -7,7 +7,7 @@ Author: Takuro Hishikawa
 Author URI: https://en.digitalcube.jp/
 Text Domain: really-simple-csv-importer
 License: GPL version 2 or later - http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
-Version: 1.1
+Version: 1.2
 */
 
 if ( !defined('WP_LOAD_IMPORTERS') )

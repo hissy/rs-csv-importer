@@ -1,9 +1,9 @@
 === Really Simple CSV Importer ===
 Contributors: hissy
-Tags: importer, csv, acf, cfs
+Tags: importer, csv, acf, cfs, scf
 Requires at least: 3.6
-Tested up to: 4.1
-Stable tag: 1.1
+Tested up to: 4.1.1
+Stable tag: 1.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -16,6 +16,7 @@ Alternative CSV Importer plugin. Simple and powerful, best for geeks.
 * Category support
 * Tag support
 * Custom field support
+* [Smart Custom Fields](https://wordpress.org/plugins/smart-custom-fields/) support
 * [Custom Field Suite](http://customfieldsuite.com/) support
 * [Advanced Custom Fields](http://www.advancedcustomfields.com/) support
 * Custom Taxonomy support
@@ -105,7 +106,9 @@ Because PHP cannot read multibyte text cells in some cases.
 
 = Can I insert multiple values to CFS or ACF fields like Select or Checkbox? =
 
-Yes. Please use `really_simple_csv_importer_save_meta` filter to make array data.
+Yes. Please create additional plugin and use `really_simple_csv_importer_save_meta` filter to make array data.
+
+[Add-on development example](https://gist.github.com/hissy/d2041481a72510b7f394)
 
 == How to debug import data == 
 
@@ -222,6 +225,8 @@ Example: [gist](https://gist.github.com/hissy/199ad9be855ec9be1e54)
 
 == Changelog ==
 
+= 1.2 =
+* Enhancement: Smart Custom Fields support
 = 1.1 =
 * Enhancement: Support localization
 * Bug fixes
