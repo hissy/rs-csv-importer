@@ -2,7 +2,7 @@
 Contributors: hissy
 Tags: importer, csv, acf, cfs, scf
 Requires at least: 3.6
-Tested up to: 4.1.1
+Tested up to: 4.2.1
 Stable tag: 1.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -46,7 +46,8 @@ You can get example CSV files in `/wp-content/plugins/really-simple-csv-importer
 * `post_tags`: (string, comma separated) name of post tags
 * `tax_{taxonomy}`: (string, comma separated) Any field prefixed with `tax_` will be used as a custom taxonomy. Taxonomy must already exist. Entries are names or slugs of terms.
 * `{custom_field_key}`: (string) Any other column labels used as custom field
-* `cfs_{field_name}`: (string) If you would like to import data to custom fields set by Custom Field Suite, please add prefix `cfs_`
+* `cfs_{field_name}`: (string) If you would like to import data to custom fields set by Custom Field Suite, please add prefix `cfs_` to column header name.
+* `scf_{field_name}`: (string) If you would like to import data to custom fields set by Smart Custom Fields, please add prefix `scf_` to column header name.
 
 Note: Empty cells in the csv file means "keep it", not "delete it".  
 Note: To set the page template of a page, use custom field key of `_wp_page_template`.  
@@ -227,6 +228,7 @@ Example: Update row based on a custom field ID/key match (Download from [gist](h
 
 = 1.2 =
 * Enhancement: Smart Custom Fields support
+* Check if the provided post status is already registered
 = 1.1 =
 * Enhancement: Support localization
 * Bug fixes
