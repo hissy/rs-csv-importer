@@ -151,6 +151,7 @@ class RS_CSV_Importer extends WP_Importer {
 		}
 		
 		$is_first = true;
+		$post_statuses = get_post_stati();
 		
 		echo '<ol>';
 		
@@ -223,7 +224,9 @@ class RS_CSV_Importer extends WP_Importer {
 				// (string) post status
 				$post_status = $h->get_data($this,$data,'post_status');
 				if ($post_status) {
-					$post['post_status'] = $post_status;
+    				if (in_array($post_status, $post_statuses)) {
+    					$post['post_status'] = $post_status;
+    				}
 				}
 				
 				// (string) post title
