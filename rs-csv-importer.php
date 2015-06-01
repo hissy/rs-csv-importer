@@ -229,6 +229,12 @@ class RS_CSV_Importer extends WP_Importer {
     				}
 				}
 				
+				// (string) post password
+				$post_password = $h->get_data($this,$data,'post_password');
+				if ($post_password) {
+    				$post['post_password'] = $post_password;
+				}
+				
 				// (string) post title
 				$post_title = $h->get_data($this,$data,'post_title');
 				if ($post_title) {
