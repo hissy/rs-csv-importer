@@ -36,6 +36,7 @@ You can get example CSV files in `/wp-content/plugins/really-simple-csv-importer
 * `post_title`: (string) The title of the post.
 * `post_excerpt`: (string) For all your post excerpt needs.
 * `post_status`: ('draft' or 'publish' or 'pending' or 'future' or 'private' or custom registered status) The status of the post. 'draft' is default.
+* `post_password`: (string) The password to protect tye post.The password is limited to 20 characters.
 * `post_name`: (string) The slug of the post.
 * `post_parent`: (int) The post parent id. Used for page or hierarchical post type.
 * `menu_order`: (int)
