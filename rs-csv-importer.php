@@ -109,7 +109,13 @@ class RS_CSV_Importer extends WP_Importer {
 			$post_tags = $post['post_tags'];
 			unset($post['post_tags']);
 		}
-		
+
+		// Special handling of attachments
+		if (!empty($thumbnail) && $post['post_type'] == 'attachment') {
+			$post['media_file'] = $thumbnail;
+			$thumbnail = null;
+		}
+
 		// Add or update the post
 		if ($is_update) {
 			$h = RSCSV_Import_Post_Helper::getByID($post['ID']);
