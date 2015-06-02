@@ -1,0 +1,139 @@
+# Copyright (C) 2015 
+# This file is distributed under the same license as the  package.
+msgid ""
+msgstr ""
+"Project-Id-Version: Really Simple CSV Importer 1.0.1\n"
+"Report-Msgid-Bugs-To: http://wordpress.org/tag/really-simple-csv-importer\n"
+"POT-Creation-Date: 2015-06-02 23:40+0100\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"PO-Revision-Date: 2015-06-02 23:53+0100\n"
+"Last-Translator: PieroWbmstr <me@e-piwi.fr>\n"
+"Language-Team: \n"
+"Language: fr\n"
+"X-Generator: Poedit 1.8.1\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+
+#: class-rscsv_import_post_helper.php:73
+msgid "Provided Post ID not found."
+msgstr "Le Post ID fourni est introuvable."
+
+#: class-rscsv_import_post_helper.php:179
+#: class-rscsv_import_post_helper.php:199
+#: class-rscsv_import_post_helper.php:220
+#: class-rscsv_import_post_helper.php:235
+#: class-rscsv_import_post_helper.php:251
+msgid "WP_Post object is not set."
+msgstr "L’objet WP_Post n’est pas défini."
+
+#: class-rscsv_import_post_helper.php:364
+msgid "Could not get remote file."
+msgstr "Impossible d’accéder au fichier distant."
+
+#: rs-csv-importer.php:47
+msgid "Import CSV"
+msgstr "Importer un CSV"
+
+#: rs-csv-importer.php:57
+msgid "Choose a CSV (.csv) file to upload, then click Upload file and import."
+msgstr ""
+"Choisissez un fichier CSV (.csv) à télécharger, puis cliquez sur Envoyer le "
+"fichier et importer."
+
+#: rs-csv-importer.php:58
+msgid ""
+"Excel-style CSV file is unconventional and not recommended. LibreOffice has "
+"enough export options and recommended for most users."
+msgstr ""
+"Le logiciel Excel n’est pas recommandé pour créer un fichier CSV. "
+"LibreOffice propose toutes les options d’exportation nécessaires et est "
+"recommandé pour la plupart des utilisateurs."
+
+#: rs-csv-importer.php:59
+msgid "Requirements:"
+msgstr "Prérequis:"
+
+#: rs-csv-importer.php:61
+msgid "Select UTF-8 as charset."
+msgstr "Sélectionnez le jeu de caractères UTF-8."
+
+#: rs-csv-importer.php:62
+msgid "You must use field delimiter as \"%s\""
+msgstr "Vous devez utiliser le délimiteur de champ « %s »"
+
+#: rs-csv-importer.php:63
+msgid "You must quote all text cells."
+msgstr "Vous devez mettre entre guillemets toutes les cellules de texte."
+
+#: rs-csv-importer.php:65
+msgid "Download example CSV files:"
+msgstr "Télécharger des fichiers CSV d’exemple:"
+
+#: rs-csv-importer.php:66
+msgid "csv"
+msgstr ""
+
+#: rs-csv-importer.php:67
+msgid "ods"
+msgstr ""
+
+#: rs-csv-importer.php:68
+msgid ""
+"(OpenDocument Spreadsheet file format for LibreOffice. Please export as csv "
+"before import)"
+msgstr ""
+"(format de fichier OpenDocument Spreadsheet de LibreOffice. Veuillez "
+"exporter en csv avant l’import)"
+
+#: rs-csv-importer.php:78 rs-csv-importer.php:82
+msgid "Sorry, there has been an error."
+msgstr "Désolé, une erreur est survenue."
+
+#: rs-csv-importer.php:83
+msgid ""
+"The export file could not be found at <code>%s</code>. It is likely that "
+"this was caused by a permissions problem."
+msgstr ""
+"Le fichier d’export n’a pas pu être trouvé à <code>%s</code>. Il est "
+"probable que ce soit du à un problème de permissions."
+
+#: rs-csv-importer.php:148
+msgid "Failed to open file."
+msgstr "Echec de l’ouverture du fichier."
+
+#: rs-csv-importer.php:174
+msgid "Invalid post type \"%s\"."
+msgstr "Type de post invalide \"%s\"."
+
+#: rs-csv-importer.php:177
+msgid "Note: Please include post_type value if that is possible."
+msgstr "Note: Veuillez inclure une valeur de post_type si c’est possible."
+
+#: rs-csv-importer.php:192
+msgid ""
+"The post type value from your csv file does not match the existing data in "
+"your database. post_id: %d, post_type(csv): %s, post_type(db): %s"
+msgstr ""
+"Le type de post extrait de votre fichier csv ne correspond pas la valeur "
+"existante dans votre base de données. post_id: %d, post_type(csv): %s, "
+"post_type(db): %s"
+
+#: rs-csv-importer.php:367
+msgid "Processing \"%s\" done."
+msgstr "Traitement effectué pour \"%s\"."
+
+#: rs-csv-importer.php:386
+msgid "All Done."
+msgstr "Traitements terminés."
+
+#: rs-csv-importer.php:419
+msgid "CSV"
+msgstr ""
+
+#: rs-csv-importer.php:419
+msgid "Import posts, categories, tags, custom fields from simple csv file."
+msgstr ""
+"Importer des posts, catégories, tags et champs personnalisés depuis un "
+"simple fichier csv."
