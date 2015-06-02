@@ -328,7 +328,15 @@ class RS_CSV_Importer extends WP_Importer {
 				 * @param bool $is_update
 				 */
 				$tax = apply_filters( 'really_simple_csv_importer_save_tax', $tax, $post, $is_update );
-				
+				/**
+				 * Filter thumbnail URL or path.
+				 *
+				 * @param string $post_thumbnail (required)
+				 * @param array $post
+				 * @param bool $is_update
+				 */
+				$post_thumbnail = apply_filters( 'really_simple_csv_importer_save_thumbnail', $post_thumbnail, $post, $is_update );
+
 				/**
 				 * Option for dry run testing
 				 *

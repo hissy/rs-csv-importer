@@ -209,6 +209,35 @@ function really_simple_csv_importer_save_tax_filter( $tax, $post, $is_update ) {
 add_filter( 'really_simple_csv_importer_save_tax', 'really_simple_csv_importer_save_tax_filter', 10, 3 );
 `
 
+= really_simple_csv_importer_save_thumbnail =
+
+This filter is applied to thumbnail data.
+
+Parameters:
+
+* `$post_thumbnail` - (string)(required) the thumbnail file path or distant URL
+* `$post` - (array) post data
+* `$is_update` - (bool)
+
+Example:
+
+`
+function really_simple_csv_importer_save_thumbnail_filter( $post_thumbnail, $post, $is_update ) {
+
+	// Import a local file from an FTP directory
+	if (!empty($post_thumbnail) && file_exists($post_thumbnail)) {
+		$upload_dir   = wp_upload_dir();
+		$target_path  = $upload_dir['path'] . DIRECTORY_SEPARATOR . basename($post_thumbnail);
+		if (copy($post_thumbnail, $target_path)) {
+			$post_thumbnail = $target_path;
+		}
+	}
+
+	return $post_thumbnail;
+}
+add_filter( 'really_simple_csv_importer_save_thumbnail', 'really_simple_csv_importer_save_thumbnail_filter', 10, 3 );
+`
+
 == How to customize the post data after importing to database ==
 
 = really_simple_csv_importer_post_saved =
