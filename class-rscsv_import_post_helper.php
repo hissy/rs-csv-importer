@@ -107,7 +107,12 @@ class RSCSV_Import_Post_Helper
     public static function add($data)
     {
         $object = new RSCSV_Import_Post_Helper();
-        $post_id = wp_insert_post($data, true);
+
+        if ($data['post_type'] == 'attachment') {
+            $post_id = $object->addMediaFile($data['media_file'], $data);
+        } else {
+            $post_id = wp_insert_post($data, true);
+        }
         if (is_wp_error($post_id)) {
             $object->addError($post_id->get_error_code(), $post_id->get_error_message());
         } else {
@@ -126,6 +131,10 @@ class RSCSV_Import_Post_Helper
         $post = $this->getPost();
         if ($post instanceof WP_Post) {
             $data['ID'] = $post->ID;
+        }
+        if ($data['post_type'] == 'attachment' && !empty($data['media_file'])) {
+            $this->updateAttachment($data['media_file']);
+            unset($data['media_file']);
         }
         $post_id = wp_update_post($data, true);
         if (is_wp_error($post_id)) {
@@ -291,16 +300,17 @@ class RSCSV_Import_Post_Helper
      * Add attachment file. Automatically get remote file
      *
      * @param (string) $file
+     * @param (array) $data
      * @return (boolean) True on success, false on failure.
      */
-    public function addMediaFile($file)
+    public function addMediaFile($file, $data = null)
     {
         if (parse_url($file, PHP_URL_SCHEME)) {
             $file = $this->remoteGet($file);
         }
-        $id = $this->setAttachment($file);
+        $id = $this->setAttachment($file, $data);
         if ($id) {
-            return true;
+            return $id;
         }
         
         return false;
@@ -335,41 +345,55 @@ class RSCSV_Import_Post_Helper
      * A wrapper of wp_insert_attachment and wp_update_attachment_metadata
      *
      * @param (string) $file
+     * @param (array) $data
      * @return (int) Return the attachment id on success, 0 on failure.
      */
-    public function setAttachment($file)
+    public function setAttachment($file, $data = array())
     {
         $post = $this->getPost();
-        if ($post instanceof WP_Post) {
-            if ( $file && file_exists($file) ) {
-                $filename = basename($file);
-                $wp_filetype = wp_check_filetype_and_ext($file, $filename);
-                $ext = empty( $wp_filetype['ext'] ) ? '' : $wp_filetype['ext'];
-                $type = empty( $wp_filetype['type'] ) ? '' : $wp_filetype['type'];
-                $proper_filename = empty( $wp_filetype['proper_filename'] ) ? '' : $wp_filetype['proper_filename'];
-                $filename = ($proper_filename) ? $proper_filename : $filename;
-                $filename = sanitize_file_name($filename);
-                
-                $upload_dir = wp_upload_dir();
-                $guid = $upload_dir['baseurl'] . '/' . _wp_relative_upload_path($file);
-                
-                $attachment = array(
-                    'post_mime_type' => $type,
-                    'guid' => $guid,
-                    'post_title' => $filename,
-                    'post_content' => '',
-                    'post_status' => 'inherit'
-                );
-                $attachment_id = wp_insert_attachment($attachment, $file, $post->ID);
-                $attachment_metadata = wp_generate_attachment_metadata( $attachment_id, $file );
-                wp_update_attachment_metadata($attachment_id, $attachment_metadata);
-                return $attachment_id;
-            }
+        if ( $file && file_exists($file) ) {
+            $filename       = basename($file);
+            $wp_filetype    = wp_check_filetype_and_ext($file, $filename);
+            $ext            = empty( $wp_filetype['ext'] ) ? '' : $wp_filetype['ext'];
+            $type           = empty( $wp_filetype['type'] ) ? '' : $wp_filetype['type'];
+            $proper_filename= empty( $wp_filetype['proper_filename'] ) ? '' : $wp_filetype['proper_filename'];
+            $filename       = ($proper_filename) ? $proper_filename : $filename;
+            $filename       = sanitize_file_name($filename);
+
+            $upload_dir     = wp_upload_dir();
+            $guid           = $upload_dir['baseurl'] . '/' . _wp_relative_upload_path($file);
+
+            $attachment = array_merge(array(
+                'post_mime_type'    => $type,
+                'guid'              => $guid,
+                'post_title'        => $filename,
+                'post_content'      => '',
+                'post_status'       => 'inherit'
+            ), $data);
+            $attachment_id          = wp_insert_attachment($attachment, $file, ($post instanceof WP_Post) ? $post->ID : null);
+            $attachment_metadata    = wp_generate_attachment_metadata( $attachment_id, $file );
+            wp_update_attachment_metadata($attachment_id, $attachment_metadata);
+            return $attachment_id;
         }
         // On failure
         return 0;
     }
-    
+
+    /**
+     * A wrapper of update_attached_file
+     *
+     * @param (string) $value
+     */
+    protected function updateAttachment($value)
+    {
+        $post = $this->getPost();
+        if ($post instanceof WP_Post) {
+            update_attached_file($post->ID, $value);
+        } else {
+            $this->addError('post_is_not_set', __('WP_Post object is not set.', 'really-simple-csv-importer'));
+        }
+    }
+
     /**
      * A wrapper of wp_safe_remote_get
      *
