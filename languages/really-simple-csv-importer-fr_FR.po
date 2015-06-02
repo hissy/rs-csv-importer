@@ -12,7 +12,7 @@ msgstr ""
 "Last-Translator: PieroWbmstr <me@e-piwi.fr>\n"
 "Language-Team: \n"
 "Language: fr\n"
-"X-Generator: Poedit 1.8\n"
+"X-Generator: Poedit 1.8.1\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
@@ -47,9 +47,9 @@ msgid ""
 "Excel-style CSV file is unconventional and not recommended. LibreOffice has "
 "enough export options and recommended for most users."
 msgstr ""
-"Le style Excel n’est pas conventionnel pour un fichier CSV et non "
-"recommandé. LibreOffice propose toutes les options d’exportation "
-"nécessaires et est recommandé pour la plupart des utilisateurs."
+"Le logiciel Excel n’est pas recommandé pour créer un fichier CSV. "
+"LibreOffice propose toutes les options d’exportation nécessaires et est "
+"recommandé pour la plupart des utilisateurs."
 
 #: rs-csv-importer.php:59
 msgid "Requirements:"
@@ -57,7 +57,7 @@ msgstr "Prérequis:"
 
 #: rs-csv-importer.php:61
 msgid "Select UTF-8 as charset."
-msgstr "Sélectionnez UTF-8 comme jeu de caractères."
+msgstr "Sélectionnez le jeu de caractères UTF-8."
 
 #: rs-csv-importer.php:62
 msgid "You must use field delimiter as \"%s\""
@@ -126,7 +126,7 @@ msgstr "Traitement effectué pour \"%s\"."
 
 #: rs-csv-importer.php:386
 msgid "All Done."
-msgstr "Terminé."
+msgstr "Traitements terminés."
 
 #: rs-csv-importer.php:419
 msgid "CSV"
