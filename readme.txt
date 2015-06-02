@@ -215,25 +215,25 @@ This filter is applied to thumbnail data.
 
 Parameters:
 
-* `$thumbnail` - (string)(required) the thumbnail file path or distant URL
+* `$post_thumbnail` - (string)(required) the thumbnail file path or distant URL
 * `$post` - (array) post data
 * `$is_update` - (bool)
 
 Example:
 
 `
-function really_simple_csv_importer_save_thumbnail_filter( $thumbnail, $post, $is_update ) {
+function really_simple_csv_importer_save_thumbnail_filter( $post_thumbnail, $post, $is_update ) {
 
 	// Import a local file from an FTP directory
-	if (!empty($thumbnail) && file_exists($thumbnail)) {
+	if (!empty($post_thumbnail) && file_exists($post_thumbnail)) {
 		$upload_dir   = wp_upload_dir();
-		$target_path  = $upload_dir['path'] . DIRECTORY_SEPARATOR . basename($thumbnail);
-		if (copy($thumbnail, $target_path)) {
-			$thumbnail = $target_path;
+		$target_path  = $upload_dir['path'] . DIRECTORY_SEPARATOR . basename($post_thumbnail);
+		if (copy($post_thumbnail, $target_path)) {
+			$post_thumbnail = $target_path;
 		}
 	}
 
-	return $thumbnail;
+	return $post_thumbnail;
 }
 add_filter( 'really_simple_csv_importer_save_thumbnail', 'really_simple_csv_importer_save_thumbnail_filter', 10, 3 );
 `
