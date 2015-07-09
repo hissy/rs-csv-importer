@@ -49,10 +49,12 @@ You can get example CSV files in `/wp-content/plugins/really-simple-csv-importer
 * `{custom_field_key}`: (string) Any other column labels used as custom field
 * `cfs_{field_name}`: (string) If you would like to import data to custom fields set by Custom Field Suite, please add prefix `cfs_` to column header name.
 * `scf_{field_name}`: (string) If you would like to import data to custom fields set by Smart Custom Fields, please add prefix `scf_` to column header name.
+* `comment_status`: ('closed' or 'open') Default is the option 'default_comment_status', or 'closed'.
 
 Note: Empty cells in the csv file means "keep it", not "delete it".  
 Note: To set the page template of a page, use custom field key of `_wp_page_template`.  
 Note: If providing a post_status of 'future' you must specify the post_date in order for WordPress to know when to publish your post.
+Note: If the post_type value is `attachment`, you can use `post_thumbnail` field to define media URL or path.
 
 = Advanced Custom Fields plugin integrate =
 If advanced custom field key is exists, importer will trying to use [update_field](http://www.advancedcustomfields.com/resources/functions/update_field/) function instead of built-in add_post_meta function.  
