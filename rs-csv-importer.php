@@ -271,6 +271,12 @@ class RS_CSV_Importer extends WP_Importer {
 					$post['menu_order'] = $menu_order;
 				}
 				
+				// (string) comment status
+				$comment_status = $h->get_data($this,$data,'comment_status');
+				if ($comment_status) {
+					$post['comment_status'] = $comment_status;
+				}
+				
 				// (string, comma separated) slug of post categories
 				$post_category = $h->get_data($this,$data,'post_category');
 				if ($post_category) {
