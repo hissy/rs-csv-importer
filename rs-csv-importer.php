@@ -226,6 +226,10 @@ class RS_CSV_Importer extends WP_Importer {
 				if ($post_date) {
 					$post['post_date'] = date("Y-m-d H:i:s", strtotime($post_date));
 				}
+				$post_date_gmt = $h->get_data($this,$data,'post_date_gmt');
+				if ($post_date_gmt) {
+					$post['post_date_gmt'] = date("Y-m-d H:i:s", strtotime($post_date_gmt));
+				}
 				
 				// (string) post status
 				$post_status = $h->get_data($this,$data,'post_status');
