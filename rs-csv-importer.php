@@ -7,7 +7,7 @@ Author: Takuro Hishikawa
 Author URI: https://en.digitalcube.jp/
 Text Domain: really-simple-csv-importer
 License: GPL version 2 or later - http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
-Version: 1.2
+Version: 1.3
 */
 
 if ( !defined('WP_LOAD_IMPORTERS') )
@@ -346,6 +346,8 @@ class RS_CSV_Importer extends WP_Importer {
 				$tax = apply_filters( 'really_simple_csv_importer_save_tax', $tax, $post, $is_update );
 				/**
 				 * Filter thumbnail URL or path.
+				 *
+				 * @since 1.3
 				 *
 				 * @param string $post_thumbnail (required)
 				 * @param array $post

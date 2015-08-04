@@ -2,8 +2,8 @@
 Contributors: hissy
 Tags: importer, csv, acf, cfs, scf
 Requires at least: 3.6
-Tested up to: 4.2.1
-Stable tag: 1.2
+Tested up to: 4.3
+Stable tag: 1.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -258,6 +258,13 @@ Example: Update row based on a custom field ID/key match (Download from [gist](h
 
 == Changelog ==
 
+= 1.3 =
+* Some Enhancements (Thanks @piwi!)
+  * Attachment support
+  * Add "really_simple_csv_importer_save_thumbnail" Filter
+  * French translations
+* Support post date GMT
+* Support post password
 = 1.2 =
 * Enhancement: Smart Custom Fields support
 * Check if the provided post status is already registered
