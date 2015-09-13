@@ -220,6 +220,16 @@ class RS_CSV_Importer extends WP_Importer {
 						unset($user);
 					}
 				}
+
+				// user_login to post_author
+				$user_login = $h->get_data($this,$data,'user_login');
+				if ($user_login) {
+					$user = get_user_by('login',$user_login);
+					if (isset($user) && is_object($user)) {
+						$post['post_author'] = $user->ID;
+						unset($user);
+					}
+				}
 				
 				// (string) publish date
 				$post_date = $h->get_data($this,$data,'post_date');
