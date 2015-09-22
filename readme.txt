@@ -31,6 +31,7 @@ You can get example CSV files in `/wp-content/plugins/really-simple-csv-importer
 * `ID` or `post_id`: (int) post id.  
   This value is not required. The post ID is already exists in your blog, importer will update that post data. If the ID is not exists, importer will trying to create a new post with suggested ID.
 * `post_author`: (login or ID) The user name or user ID number of the author.
+* `post_author_login`: The user name of the author.
 * `post_date`: (string) The time of publish date.
 * `post_content`: (string) The full text of the post.
 * `post_title`: (string) The title of the post.

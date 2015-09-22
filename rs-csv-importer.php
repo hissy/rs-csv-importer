@@ -222,7 +222,7 @@ class RS_CSV_Importer extends WP_Importer {
 				}
 
 				// user_login to post_author
-				$user_login = $h->get_data($this,$data,'user_login');
+				$user_login = $h->get_data($this,$data,'post_author_login');
 				if ($user_login) {
 					$user = get_user_by('login',$user_login);
 					if (isset($user) && is_object($user)) {
