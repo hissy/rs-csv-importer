@@ -200,7 +200,27 @@ class RS_CSV_Importer extends WP_Importer {
 						}
 					}
 				}
-				
+
+				// (string) post title
+				$post_title = $h->get_data($this,$data,'post_title');
+				if ($post_title) {
+
+					if ( ! $is_update ) {
+						//try to update a post with the same title
+						if ( ! $post_type ) {
+							$post_type = 'post';
+						}
+						$post_id = get_page_by_title($post_title, OBJECT, $post_type);
+
+						if ( ! is_null($post_id) ) {
+							$post['ID'] = $post_id;
+							$is_update = true;
+						}
+					}
+
+					$post['post_title'] = $post_title;
+				}
+
 				// (string) post slug
 				$post_name = $h->get_data($this,$data,'post_name');
 				if ($post_name) {
@@ -254,13 +274,7 @@ class RS_CSV_Importer extends WP_Importer {
 				if ($post_password) {
     				$post['post_password'] = $post_password;
 				}
-				
-				// (string) post title
-				$post_title = $h->get_data($this,$data,'post_title');
-				if ($post_title) {
-					$post['post_title'] = $post_title;
-				}
-				
+
 				// (string) post content
 				$post_content = $h->get_data($this,$data,'post_content');
 				if ($post_content) {
