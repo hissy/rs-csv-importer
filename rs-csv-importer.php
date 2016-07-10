@@ -67,6 +67,18 @@ class RS_CSV_Importer extends WP_Importer {
 		echo ' <a href="'.plugin_dir_url( __FILE__ ).'sample/sample.ods">'.__( 'ods', 'really-simple-csv-importer' ).'</a>';
 		echo ' '.__('(OpenDocument Spreadsheet file format for LibreOffice. Please export as csv before import)', 'really-simple-csv-importer' );
 		echo '</p>';
+		?>
+		<div id="really-simple-csv-importer-form-options" style="display: none;">
+			<h2><?php _e( 'Import Options', 'really-simple-csv-importer' ); ?></h2>
+			<p><?php _e( 'Replace by post title', 'really-simple-csv-importer' ); ?></p>
+			<label>
+				<input type="radio" name="replace-by-title" value="0" checked="checked" /><?php _e( 'Disable', 'really-simple-csv-importer' ); ?>
+			</label>
+			<label>
+				<input type="radio" name="replace-by-title" value="1" /><?php _e( 'Enable', 'really-simple-csv-importer' ); ?>
+			</label>
+		</div>
+		<?php
 		wp_import_upload_form( add_query_arg('step', 1) );
 	}
 
@@ -205,7 +217,7 @@ class RS_CSV_Importer extends WP_Importer {
 				$post_title = $h->get_data($this,$data,'post_title');
 				if ($post_title) {
 
-					if ( ! $is_update ) {
+					if ( ! $is_update && $_POST['replace-by-title'] == 1 ) {
 						//try to update a post with the same title
 						if ( ! $post_type ) {
 							$post_type = 'post';
@@ -480,5 +492,14 @@ function really_simple_csv_importer() {
     register_importer('csv', __('CSV', 'really-simple-csv-importer'), __('Import posts, categories, tags, custom fields from simple csv file.', 'really-simple-csv-importer'), array ($rs_csv_importer, 'dispatch'));
 }
 add_action( 'plugins_loaded', 'really_simple_csv_importer' );
+
+function really_simple_csv_importer_enqueue($hook) {
+	if ( 'admin.php' != $hook ) {
+		return;
+	}
+
+	wp_enqueue_script( 'really_simple_csv_importer_admin_script', plugin_dir_url( __FILE__ ) . 'auto.js', array(), false, true );
+}
+add_action( 'admin_enqueue_scripts', 'really_simple_csv_importer_enqueue' );
 
 } // class_exists( 'WP_Importer' )
