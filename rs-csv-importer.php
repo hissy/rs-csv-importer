@@ -445,6 +445,8 @@ class RS_CSV_Importer extends WP_Importer {
 				}
 				
 				echo '</li>';
+
+				wp_cache_flush();
 			}
 		}
 		
