@@ -69,7 +69,7 @@ You can get example CSV files in `/wp-content/plugins/really-simple-csv-importer
 Add star and read future issues about rs-csv-importer on [GitHub](https://github.com/hissy/rs-csv-importer)!
 
 ## Thanks
-Cover banner designed by @[luchino__](http://uwasora.com/)
+Cover banner designed by @[luchino](http://uwasora.com/)
 
 ## Installation
 
@@ -245,7 +245,7 @@ Example:
 
 This action provides availability to run some tasks after importing.
 
-Example: Download image from remote url to custom field (Download from [gist](https://gist.github.com/hissy/0973a6a9977129a6ebd0)
+Example: Download image from remote url to custom field (Download from [gist](https://gist.github.com/hissy/0973a6a9977129a6ebd0))
 
 ## How to customize the importing process entirely
 
@@ -253,7 +253,7 @@ Example: Download image from remote url to custom field (Download from [gist](ht
 
 This filter provides availability to completely replace the `RS_CSV_Importer#save_post` method.
 
-Example: Update row based on a custom field ID/key match (Download from [gist](https://gist.github.com/hissy/199ad9be855ec9be1e54)
+Example: Update row based on a custom field ID/key match (Download from [gist](https://gist.github.com/hissy/199ad9be855ec9be1e54))
 
 ## Changelog
 
