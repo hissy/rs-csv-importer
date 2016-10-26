@@ -22,13 +22,13 @@ Alternative CSV Importer plugin. Simple and powerful, best for geeks.
 * Custom Taxonomy support
 * Custom Post Type support
 * Filter hook for dry-run-testing
-* Filter hooks for customize csv data before importing to database
+* [Filter hooks for customized csv data importing](https://wordpress.org/plugins/really-simple-csv-importer/other_notes/) to database
 * Action hook for update post data after importing to database
 
 You can get example CSV files in `/wp-content/plugins/really-simple-csv-importer/sample` directory.
 
 = Available column names and values: =
-* `ID` or `post_id`: (int) post id.  
+* `ID` or `post_id`: (int) post id.
   This value is not required. The post ID is already exists in your blog, importer will update that post data. If the ID is not exists, importer will trying to create a new post with suggested ID.
 * `post_author`: (login or ID) The user name or user ID number of the author.
 * `post_author_login`: The user name of the author.
@@ -42,7 +42,7 @@ You can get example CSV files in `/wp-content/plugins/really-simple-csv-importer
 * `post_parent`: (int) The post parent id. Used for page or hierarchical post type.
 * `menu_order`: (int)
 * `post_type`: ('post' or 'page' or any other post type name) *(required)* The post type slug, not labels.
-* `post_thumbnail`: (string) The uri or path of the post thumbnail.  
+* `post_thumbnail`: (string) The uri or path of the post thumbnail.
   E.g. http://example.com/example.jpg or /path/to/example.jpg
 * `post_category`: (string, comma separated) slug of post categories
 * `post_tags`: (string, comma separated) name of post tags
@@ -52,13 +52,13 @@ You can get example CSV files in `/wp-content/plugins/really-simple-csv-importer
 * `scf_{field_name}`: (string) If you would like to import data to custom fields set by Smart Custom Fields, please add prefix `scf_` to column header name.
 * `comment_status`: ('closed' or 'open') Default is the option 'default_comment_status', or 'closed'.
 
-Note: Empty cells in the csv file means "keep it", not "delete it".  
-Note: To set the page template of a page, use custom field key of `_wp_page_template`.  
+Note: Empty cells in the csv file means "keep it", not "delete it".
+Note: To set the page template of a page, use custom field key of `_wp_page_template`.
 Note: If providing a post_status of 'future' you must specify the post_date in order for WordPress to know when to publish your post.
 Note: If the post_type value is `attachment`, you can use `post_thumbnail` field to define media URL or path.
 
 = Advanced Custom Fields plugin integrate =
-If advanced custom field key is exists, importer will trying to use [update_field](http://www.advancedcustomfields.com/resources/functions/update_field/) function instead of built-in add_post_meta function.  
+If advanced custom field key is exists, importer will trying to use [update_field](http://www.advancedcustomfields.com/resources/functions/update_field/) function instead of built-in add_post_meta function.
 How to find advanced custom field key: [Finding the field key](http://www.advancedcustomfields.com/resources/functions/update_field/#finding-the%20field%20key)
 
 = Official public repository =
@@ -94,13 +94,13 @@ Yes. You can use column names same as wp_post table, but if the column name does
 
 Here is an example.
 
-**csv file**  
-"post_title","released","tax_actors"  
-"Captain Phillips","2013","Tom Hanks, Barkhad Abdi, Barkhad Abdirahman"  
+**csv file**
+"post_title","released","tax_actors"
+"Captain Phillips","2013","Tom Hanks, Barkhad Abdi, Barkhad Abdirahman"
 
-**imported post data**  
-Post Title: Captain Phillips  
-Custom field "released": 2013  
+**imported post data**
+Post Title: Captain Phillips
+Custom field "released": 2013
 Custom taxonomy "Actors": Tom Hanks, Barkhad Abdi, Barkhad Abdirahman
 
 = Why should I quote text cells when I save csv file? =
@@ -115,12 +115,102 @@ Yes. Please create additional plugin and use `really_simple_csv_importer_save_me
 
 [Add-on development example](https://gist.github.com/hissy/d2041481a72510b7f394)
 
-== How to debug import data == 
+= Can I import multiple files as attachments into a post? =
 
-*Really Simple CSV Importer Debugger add-on* enables you to dry-run-testing and show more detailed post, meta, taxonomy data of each csv row.  
+Here is an example, assuming you have a field called `cf47rs_images`, format the csv cell data as,
+
+`http://localhost/websitename/photos/photo12345-1.jpg|http://localhost/websitename/photos/photo12345-2.jpg|http://localhost/websitename/photos/photo12345-3.jpg`
+
+or some other urls of files you want to import, and then use the `really_simple_csv_importer_save_meta` filter to hook into the import process,
+
+`add_filter( 'really_simple_csv_importer_save_meta', 'rsc_import_images',10,3);
+function rsc_import_images( $meta, $post, $is_update ) {
+  //convert to an array
+  $images = explode("|",$meta['cf47rs_images']);
+  $meta['cf47rs_images']=array();//reset the meta field
+
+  //directory to import images to
+  $artDir = 'wp-content/uploads/imported_cf47rs_images/';
+
+  //if the directory doesn't exist, create it
+  if(!file_exists(ABSPATH.$artDir)) {
+    mkdir(ABSPATH.$artDir);
+  }
+
+  require_once(ABSPATH . 'wp-load.php');
+  require_once(ABSPATH . 'wp-admin/includes/image.php');
+  global $wpdb;
+
+  //loop through each photos that need to be imported
+  foreach($images as $file_url){
+    //let's get the image file name
+    $new_filename = array_pop(explode("/", $file_url));
+
+    //move the file to our custom import folder
+    if (@fclose(@fopen($file_url, "r"))) { //make sure the file actually exists
+      $siteurl = get_option('siteurl');
+      $skip_attachment_insert=false;
+      //check if this image has already been imported,
+      if(file_exists(ABSPATH.$artDir.$new_filename) ){ //file already imported
+        //either change the name of the file  UNCOMMENT the following line
+        //$new_filename = date("Y-m-d H:i:s").$new_filename;
+
+        //.... or overwrite it, COMMENT OUT the next 3 lines of code if you choose to uncomment the renaming of file name.
+        //in which case we want to find the attachment ID and store it in our meta field
+        $attach_id = attachment_url_to_postid($siteurl.'/'.$artDir.$new_filename);
+        $meta['cf47rs_images'][$attach_id] = $siteurl.'/'.$artDir.$new_filename;
+        //no need to insert a new attachment, we reuse the same
+        $skip_attachment_insert=true;
+      }
+      //(over)write the new file
+      copy($file_url, ABSPATH.$artDir.$new_filename);
+
+      if($skip_attachment_insert) continue;
+
+      $file_info = getimagesize(ABSPATH.$artDir.$new_filename);
+
+      //create an array of attachment data to insert into wp_posts table
+      $artdata = array(
+        'post_author' => 1,
+        'post_date' => current_time('mysql'),
+        'post_date_gmt' => current_time('mysql'),
+        'post_title' => $new_filename,
+        'post_status' => 'inherit',
+        'comment_status' => 'closed',
+        'ping_status' => 'closed',
+        'post_name' => sanitize_title_with_dashes(str_replace("_", "-", $new_filename)),
+        'post_modified' => current_time('mysql'),
+        'post_modified_gmt' => current_time('mysql'),
+        'post_type' => 'attachment',
+        'guid' => $siteurl.'/'.$artDir.$new_filename,
+        'post_mime_type' => $file_info['mime']
+      );
+
+      $uploads = wp_upload_dir();
+      $save_path = $uploads['basedir'].'/imported_cf47rs_images/'.$new_filename;
+
+      //insert the database record
+      $attach_id = wp_insert_attachment( $artdata, $save_path );
+
+      $meta['cf47rs_images'][$attach_id] = $siteurl.'/'.$artDir.$new_filename;
+      //generate metadata and thumbnails, comment this out if you don't want thumbnails
+      if ($attach_data = wp_generate_attachment_metadata( $attach_id, $save_path)) {
+        wp_update_attachment_metadata($attach_id, $attach_data);
+      }
+    }
+  }
+
+
+  return $meta;
+}
+`
+
+== How to debug import data ==
+
+*Really Simple CSV Importer Debugger add-on* enables you to dry-run-testing and show more detailed post, meta, taxonomy data of each csv row.
 Download from [gist](https://gist.github.com/hissy/7175656).
 
-== How to customize import post data == 
+== How to customize import post data ==
 
 There are three filters available in the importer.
 
@@ -137,7 +227,7 @@ Example:
 
 `
 function really_simple_csv_importer_save_post_filter( $post, $is_update ) {
-	
+
 	// remove specific tag from import data
 	if (isset($post['post_tags'])) {
 		$_tags = array();
@@ -148,7 +238,7 @@ function really_simple_csv_importer_save_post_filter( $post, $is_update ) {
 		}
 		$post['post_tags'] = $_tags;
 	}
-	
+
 	return $post;
 }
 add_filter( 'really_simple_csv_importer_save_post', 'really_simple_csv_importer_save_post_filter', 10, 2 );
@@ -168,13 +258,13 @@ Example:
 
 `
 function really_simple_csv_importer_save_meta_filter( $meta, $post, $is_update ) {
-	
+
 	// serialize metadata
 	$meta_array = array();
 	if (isset($meta['meta_key_1'])) $meta_array[] = $meta['meta_key_1'];
 	if (isset($meta['meta_key_2'])) $meta_array[] = $meta['meta_key_2'];
 	$meta = array( 'meta_key' => $meta_array );
-	
+
 	return $meta;
 }
 add_filter( 'really_simple_csv_importer_save_meta', 'really_simple_csv_importer_save_meta_filter', 10, 3 );
@@ -194,7 +284,7 @@ Example:
 
 `
 function really_simple_csv_importer_save_tax_filter( $tax, $post, $is_update ) {
-	
+
 	// Fix misspelled taxonomy
 	if (isset($tax['actors'])) {
 		$_actors = array();
@@ -206,7 +296,7 @@ function really_simple_csv_importer_save_tax_filter( $tax, $post, $is_update ) {
 		}
 		$tax['actors'] = $_actors;
 	}
-	
+
 	return $tax;
 }
 add_filter( 'really_simple_csv_importer_save_tax', 'really_simple_csv_importer_save_tax_filter', 10, 3 );
@@ -249,7 +339,7 @@ This action provides availability to run some tasks after importing.
 
 Example: Download image from remote url to custom field (Download from [gist](https://gist.github.com/hissy/0973a6a9977129a6ebd0))
 
-== How to customize the importing process entirely == 
+== How to customize the importing process entirely ==
 
 = really_simple_csv_importer_class =
 
