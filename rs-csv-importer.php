@@ -461,7 +461,15 @@ class RS_CSV_Importer extends WP_Importer {
 
 	// dispatcher
 	function dispatch() {
-		$this->header();
+		
+		// is there a custom class defined?
+		$class = apply_filters( 'really_simple_csv_importer_class', null );
+		if ($class && class_exists($class,false)) {
+			$importer = new $class;
+		}
+		
+		// allow for custom header()
+		( method_exists( $importer, 'header' ) && isset($importer) ) ? $importer->header() : $this->header();
 		
 		if (empty ($_GET['step']))
 			$step = 0;
@@ -470,18 +478,21 @@ class RS_CSV_Importer extends WP_Importer {
 
 		switch ($step) {
 			case 0 :
-				$this->greet();
+				// allow for custom greet()
+				( method_exists( $importer, 'greet' ) && isset($importer) ) ? $importer->greet() : $this->greet();
 				break;
 			case 1 :
 				check_admin_referer('import-upload');
 				set_time_limit(0);
-				$result = $this->import();
+				// allow for custom import()
+				$result = ( method_exists( $importer, 'import' ) && isset($importer) ) ? $importer->import() : $this->import();	
 				if ( is_wp_error( $result ) )
 					echo $result->get_error_message();
 				break;
 		}
 		
-		$this->footer();
+		// allow for custom footer()
+		( method_exists( $importer, 'footer' ) && isset($importer) ) ? $importer->footer() : $this->footer();
 	}
 	
 }
