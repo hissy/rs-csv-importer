@@ -362,8 +362,10 @@ class RS_CSV_Importer extends WP_Importer {
 				 *
 				 * @param array $post (required)
 				 * @param bool $is_update
+				 * @param array $meta
+				 * @param array $tax
 				 */
-				$post = apply_filters( 'really_simple_csv_importer_save_post', $post, $is_update );
+				$post = apply_filters( 'really_simple_csv_importer_save_post', $post, $is_update, $meta, $tax );
 				/**
 				 * Filter meta data.
 				 *
