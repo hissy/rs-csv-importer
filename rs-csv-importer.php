@@ -135,31 +135,33 @@ class RS_CSV_Importer extends WP_Importer {
 		} else {
 			$h = RSCSV_Import_Post_Helper::add($post);
 		}
-		
+
 		// Set post tags
 		if (isset($post_tags)) {
 			$h->setPostTags($post_tags);
 		}
-		
+
 		// Set meta data
 		$h->setMeta($meta);
-		
+
 		// Set terms
 		foreach ($terms as $key => $value) {
 			$h->setObjectTerms($key, $value);
 		}
-		
+
 		// Add thumbnail
 		if ($thumbnail) {
 			$h->addThumbnail($thumbnail);
 		}
-		
+
 		return $h;
 	}
 
 	// process parse csv ind insert posts
 	function process_posts() {
-		$h = new RS_CSV_Helper;
+		$helper_class = apply_filters( 'really_simple_csv_helper_class', 'RS_CSV_Helper' );
+
+		$h = new $helper_class();
 
 		$handle = $h->fopen($this->file, 'r');
 		if ( $handle == false ) {
