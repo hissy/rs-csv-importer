@@ -15,6 +15,7 @@ class RS_CSV_Helper {
 	}
 
 	public function fgetcsv($handle, $length = 0) {
+		setlocale(LC_ALL, ".utf8");
 		return fgetcsv($handle, $length, self::DELIMITER);
 	}
 
