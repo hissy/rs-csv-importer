@@ -8,19 +8,24 @@
 class RS_CSV_Helper {
 
 	const DELIMITER = ",";
+	public $originalLocale;
 
 	// File utility functions
 	public function fopen($filename, $mode='r') {
+		$this->originalLocale = setlocale(LC_ALL, '0');
+		setlocale(LC_ALL, ".utf8");
 		return fopen($filename, $mode);
 	}
 
 	public function fgetcsv($handle, $length = 0) {
-		setlocale(LC_ALL, ".utf8");
 		return fgetcsv($handle, $length, self::DELIMITER);
 	}
 
 	public function fclose($fp) {
-		return fclose($fp);
+		$res = fclose($fp);
+		parse_str(str_replace(';', '&', $this->originalLocale), $locale_array);
+		setlocale(LC_ALL, $locale_array);
+		return $res;
  	}
 
 	public function parse_columns(&$obj, $array) {
