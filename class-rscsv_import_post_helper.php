@@ -168,7 +168,12 @@ class RSCSV_Import_Post_Helper
                     if (strpos($key, 'field_') === 0) {
                         $fobj = get_field_object($key);
                         if (is_array($fobj) && isset($fobj['key']) && $fobj['key'] == $key) {
-                            $this->acfUpdateField($key, $value);
+	                        $post = get_post($fobj['parent']);
+							if($post && $post->post_type === 'acf-field') {
+								$this->acfUpdateField($post->post_name, [$key => $value]);
+							} else {
+								$this->acfUpdateField($key, $value);
+							}
                             $is_acf = 1;
                         }
                     }
