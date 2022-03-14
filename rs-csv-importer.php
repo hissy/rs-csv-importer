@@ -493,7 +493,7 @@ function really_simple_csv_importer() {
     $rs_csv_importer = new RS_CSV_Importer();
     register_importer('csv', __('CSV', 'really-simple-csv-importer'), __('Import posts, categories, tags, custom fields from simple csv file.', 'really-simple-csv-importer'), array ($rs_csv_importer, 'dispatch'));
 }
-add_action( 'plugins_loaded', 'really_simple_csv_importer' );
+add_action( 'after_setup_theme', 'really_simple_csv_importer' );
 
 function really_simple_csv_importer_enqueue($hook) {
 	if ( 'admin.php' != $hook ) {
