@@ -159,7 +159,9 @@ class RS_CSV_Importer extends WP_Importer {
 
 	// process parse csv ind insert posts
 	function process_posts() {
-		$h = new RS_CSV_Helper;
+		$helper_class = apply_filters( 'really_simple_csv_helper_class', 'RS_CSV_Helper' );
+
+		$h = new $helper_class();
 
 		$handle = $h->fopen($this->file, 'r');
 		if ( $handle == false ) {
